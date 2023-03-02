@@ -524,13 +524,13 @@ import time
 # result = finish - start
 # print(result)
 
-import locale
+# import locale
+#
+# locale.setlocale(locale.LC_ALL,"uk_UA")
+# print(time.strftime("Сьогодні: %B/%d/%Y, %H:%M:%S", time.localtime()))# вказую тільки якщо хочу кількість секунд
 
-locale.setlocale(locale.LC_ALL,"uk_UA")
-print(time.strftime("Сьогодні: %B/%d/%Y, %H:%M:%S", time.localtime()))# вказую тільки якщо хочу кількість секунд
 
-
-
+print("Hello")
 
 
 
