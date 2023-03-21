@@ -173,6 +173,7 @@ def func(a, ln=[]):
     ln.append(a)
     return ln
 
+
 #
 # print(func(1, ln=[2, 3]))
 # print(func(2))
@@ -189,6 +190,7 @@ def func(a, ln=[]):
 # Так працює видозміняємий тип данних .
 
 "**********"
+
 
 # lt1[1] = "Hello"
 # print(id(lt1))
@@ -247,21 +249,218 @@ def add_number(n):
 # print(s1)
 
 import random
-s1=tuple(random.randint(0,100) for i in range(10))
 
-print(s1)
-
-k = tuple(2**i for i in range(1,13))
-print(k)
-t1=tuple("hello")
-t2=tuple(" World")
-t3 = t1 + t2
-print(t3)
-print(t3.count("l"))
-print(t3.index("l"))
+s1 = tuple(random.randint(0, 100) for i in range(10))
 
 
+# print(s1)
+#
+# k = tuple(2**i for i in range(1,13))
+# print(k)
+# t1=tuple("hello")
+# t2=tuple(" World")
+# t3 = t1 + t2
+# print(t3)
+# print(t3.count("l"))
+# print(t3.index("l"))
+
+#
+# t = (10, 11, [1, 2, 3], [4, 5, 6], ["hello", "world"])
+# print(t, id(t))
+# t[4][0] = "new"
+# t[4].append("HI")
+# print(t, id(t))
 
 
+def rev_uniq(lst):
+    lst.reverse()
+    lst_demo = []
+    for i in lst:
+        if i in lst_demo:
+            continue
+        else:
+            lst_demo.append(i)
+    return tuple(lst_demo)
 
+
+def rev_uniqx(lst):
+    lst_demo = []
+    [lst_demo.append(i) for i in reversed(lst) if i not in lst_demo]
+    return tuple(lst_demo)  # - З lst_demo.reverse() не получиться
+
+
+# print(rev_uniq([1, 2, 3, 3, 2]))
+# print(rev_uniq([2, 1, 3, 1, 2, 5, 5, 9, 2, 0, 0]))
+# print(rev_uniqx([2, 1, 3, 1, 2, 5, 5, 9, 2, 0, 0]))
+#
+# tup = (1, 2, 3)
+# # x = tup[0]
+# # y = tup[1]
+# # z = tup[2]
+# x, y, z = tup
+# print(x, y, z)  # РОЗПАКОВКА КОРТЕЖА
+#
+#
+# def get_user():
+#     name = "Tom"
+#     age = 22
+#     is_married = False
+#     return name, age, is_married
+#
+#
+# user = get_user()  # get_user() поверне кортеж із значеннями після ретурн
+# print(user)  # кортеж
+# n, a, ix = user  # розпаковка кортежу
+# print(n, a, ix)  # Tom 22 False розпакований кортеж
+#
+# t = (1, 2, 3)
+# del t  # видалити цілий кортеж із памяті можливо
+#
+# lst = (1, 2, 3, 4, 5)
+# print(type(lst))
+# print(lst)
+# tp = list(lst)
+# print(type(tp))
+# print(tp)
+
+countries = (
+    ("Germany", 80.2,
+     (
+         ("Berlin", 3.326),
+         ("Gamburg", 1.718)
+     )
+     ),
+    ("France", 66,
+     (
+         ("Paris", 2.2),
+         ("Marsel", 1.6)
+     )
+     ),
+)
+# print(countries[0][0], countries[0][1], countries[0][2][0][0], countries[0][2][0][1], countries[0][2][1][0],
+#       countries[0][
+#           2][1][1],
+#       countries[1][0], countries[1][1], countries[1][2][0][0], countries[1][2][0][1], countries[1][2][1][0],
+#       countries[1][2][1][1], sep="\n")
+# """OR"""
+
+# for country in countries:
+#     country_name, country_population, cities = country
+#     print("\nCountry:", country_name, ". Population = ", country_population)
+#     for city in cities:
+#         city_name, city_population = city
+#         print("\tCity: ", city_name, "\n\t\tCity population: ", city_population)
+
+# s = {1, 2, 1, 2, 3, 2, 3, 8}
+# print(s)
+# print(type(s),"- МНОЖИНИ")
+# # МНОЖИНА (set) (Безліч) в python - 'контейнер',
+# # що містить елементи, що не повторюються, у випадковому порядку. індекси не працюють
+# print(len(s)) #4
+# a = {} #  СЛОВНИК. МНОЖИНИ НЕ СТВОРЮЮТЬСЯ ЧЕРЕЗ ПУСТІ ДУЖКИ {}
+# print(type(a))
+# a=set("hello") # інший спосіб зберігання даних
+# print(a)
+# c = ["hello", "Hi", "hi"]
+# a = set(c)
+# print(a)
+# b = {"hello", "Hi", "hi"}
+# print(b)
+# s2 = {x*x for x in range(10) if x % 2 == 0}
+# print(s2)
+#
+# lst23 = (list(s2))
+# print(tuple(lst23))
+# print(lst23)
+
+numbers = [1, 2, 3, 4, 5, 6, 3, 2, 1, 1, 2, 6]
+# print(numbers)
+num = set(numbers)
+# print(num)
+num = list(num)
+
+
+# print(num)
+
+def to_set(sorl):
+    result = set(sorl)
+    quantity = len(result)
+    return result, quantity
+
+
+# print(to_set([4,5,4,6,2,9,11,3,4,2]))
+
+# t = {"red", "green", "blue"}
+# print("green" not in t)
+#
+# for i in t:
+#     print(i, end=" ")
+# [action for()]
+# [action for() if()]
+##[action if() else action for()]
+###[action if() else action for() if()] # останній іф є обмеженням для обох action
+# r = ["ab_1", "ac_2", "bc_1", "ba_2"]
+# a = {"A" + i[1:] if i[0] == "a" else "B" + i[1:] for i in r}  # [action if() else action for()]
+# b = {"A" + i[1:] for i in r if i[0] == "a"}  # [action for() if()]
+# c = {"A" + i[1:] for i in r}  # [action for()]
+# d = {"A" + i[1:] if i[0] == "a" else "B" + i[1:] for i in r if i[1] == "c"} #[action if() else action for() if()]
+# print(a, b, c, d, sep="\n")
+
+# print([i if i>4 else i*2 for i in range(1, 21) if i <= 10])
+# print([str([x for x in range(random.randrange(20))]) + i[1:] if i[0] =="a" else "B" + i[1:] for i in r if i[1] =="c"])
+# print(str([x for x in range(random.randrange(20))]))
+# print(random.randint(90,100))
+
+a = {0, 1, 2, 3, 1, 1}
+a.add(4)
+numd = 2
+# print(a)
+if numd in a:
+    a.remove(numd)
+
+a.discard(6)
+a.pop()
+a.clear()
+# print(a)
+
+a = {0, 1, 2, 3}
+b = {4, 3, 2, 1}
+# c = a.union(b)
+# a|=b
+# c = a-b
+c = a.copy()
+
+# print(c)
+
+stup = {1, 2}, {3}, {4, 5}, {3, 2, 6}, {6}, {7, 8}, {9, 8}
+# print(type(stup))
+sps = []
+resultat = set()
+for s in stup:
+    for i in s:
+        resultat.add(i)
+# print(resultat, len(resultat), "\nМАКС: ", max(resultat), "MIN: ", min(resultat))
+
+s1 = {1, 2}
+s2 = {3}
+s3 = {4, 5}
+s4 = {3, 2, 6}
+s5 = {6}
+s6 = {7, 8}
+s7 = {9, 8}
+
+setup = s1.union(s2, s3, s4, s5, s6, s7)
+# setup = s1.union(s2 | s3 | s4 | s5 | s6 | s7)
+# print(setup, len(setup), max(setup), min(setup))
+
+ce = a ^ b
+print(ce)
+
+strok1= "Hello"
+strok2= "How are you"
+redds = set(strok2) & set(strok1)
+stt = str(redds)
+print(redds)
+print(type(stt))
+print(stt)
 
