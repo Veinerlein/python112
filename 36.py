@@ -249,6 +249,9 @@ d["salary"] = a.pop("salary")
 #
 # print(slovnyk_new)
 slovnyk = {"name": "Kelly", "age": 25, "salary": 8000, "city": "New-York"}
+a = dict()
+a["name"]=slovnyk.pop("name")
+a["salary"]=slovnyk.pop("salary")
 # er = slovnyk.pop("city")
 # slovnyk.update([("Location", er)])
 # print(slovnyk)
