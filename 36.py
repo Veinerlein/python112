@@ -4,11 +4,15 @@ s = frozenset([1, 2, 3, 4, 5])
 # print(s)
 a = frozenset({"hello", "world"})
 # print(a)
-b = frozenset({i ** 2 % 4 for i in range(10)})
-# print(len(b))
+b = frozenset({i ** 2 % 4 for i in range(10)})  # frozenset({0, 1})
+print((b))
 d = list(b)
 
-# DICT Словник
+""" 
+ 
+                   DICT Словник
+
+"""
 
 ls = ["ONE", "TWO"]
 # print(ls[0])
@@ -22,13 +26,13 @@ d2 = dict(one="1", two="2")
 # print(d2)
 
 d3 = dict.fromkeys("a", "b")
-# print(d3["a"])  # b
+print(d3["a"])  # b
 d3 = dict.fromkeys(["a", "b"])
 # print(d3["a"])  # NONE
 # print(d3)  # {'a': None, 'b': None}
 
 d3 = dict.fromkeys(["a", "b"], 100)
-# print(d3)
+print(d3)
 
 # users = (
 # ("igor@gmail.com","igor"),
@@ -53,35 +57,37 @@ d5 = {0: "text1", "one": 45, (1, 2, 3): "кортеж", 42: [2, 3, 6, 7], True: 
 # print(d5[1, 2, 3])  # кортеж
 # del d5[1, 2, 3]
 # print("one" in d5)  # True
-
-# if "one" in d5:
-#     print(True)
+# мЕТОД .keys проходиться по всім ключам словника
+if "one" in d5:
+    print(True)
 key = "four"
 if key in d5:
-    del d5[key]
+    del d5[key]  # тоді не буде помилки тому що ми запитуємо через умову іф
 # print(d5)
 
-# try:
-#     del d5[key]
-# except KeyError:
-# print("ПОмилка виключись, повідомлення запишись: Елемента із таким"
-#       " ключем просто немає", key)
-
+try:
+    del d5[key]
+except KeyError:
+    print("ПОмилка виключись, повідомлення запишись: Елемента із таким"
+          " ключем просто немає",
+          key)  # ПОмилка виключись, повідомлення запишись: Елемента із таким ключем просто немає four
+# немає key
 d6 = {"one": 1, "two": 2, "three": 3}
 # for key in d6:
-# print(key, d6[key])  # НА ВІДМІНУ ВІД СПИСКУ ІТЕРАЦІЯ В СЛОВНИКУ ІТИМЕ ТАК,
+#   print(key, d6[key])  # НА ВІДМІНУ ВІД СПИСКУ ІТЕРАЦІЯ В СЛОВНИКУ ІТИМЕ ТАК,
 # НІБИ МИ РПОХОДИМОСЬ ПО ІНДЕКСАМ (ЯК У ВИПАДКУ ІЗ range() у списках),
-# і тільки коди ми звертатимемось поключу буде виводитись значення d6[key]
+# і тільки коли ми звертатимемось по ключу буде виводитись значення d6[key]
 
 dictionary = {'x1': 3, 'x2': 7, 'x3': 5, 'x4': -1}
-# print(dictionary)
+print(dictionary)
 dictionary_multy = [dictionary[i] for i in dictionary]
+print(dictionary_multy)
 dictionary_mult = 1
 dictionary_mult = [dictionary_mult * i for i in dictionary_multy]
 res = 1
 for i in dictionary_multy:
     res *= i
-# print(res)
+print(res)
 # print(dictionary_mult)
 
 # from functools import reduce
@@ -139,17 +145,21 @@ dict8 = [
 # }
 
 
-# goods = {
-#     1: ['Core-i3-4330', 9, 450],
-#     2: ['Core i5 -4670k', 3, 850],
-#     3: ['AMD fx-6300', 6, 370],
-#     4: ['Pentium G3220', 8, 210],
-#     5: ['Core i5-3450', 5, 640]
-# }
+goods = {
+    1: ['Core-i3-4330', 9, 450],
+    2: ['Core i5 -4670k', 3, 850],
+    3: ['AMD fx-6300', 6, 370],
+    4: ['Pentium G3220', 8, 210],
+    5: ['Core i5-3450', 5, 640]
+}
+
+for i in goods:
+    print(i, ")", goods[i][0], '-', goods[i][1], 'шт', goods[i][2], 'price')
+
 # while True:
 #     try:
 #         vvid = int(input("Ввести номер товару: "))
-#         if vvid != 0:
+#         if vvid != "0":
 #             new_quantity = int(input("Ввести кількість: "))
 #             goods[vvid][1] = new_quantity
 #         else:
@@ -171,8 +181,12 @@ x = iter(d9)  # Виражає ітерацію
 it = list(iter(dict8))
 # print(it)
 
-value = d9.get("B", "FF")
-# print(value)  # d9["B"]
+# .clear() не видаляє а очищає словник
+
+value = d9.get("B", "FF")  # по якому конкретно ключу бажаємо отримати значення (FF = None)
+print("VALUE", value)  # 2
+print(d9["B"])  # 2
+
 
 d_copy = d9.copy()  # створить новий обєкт на відміну від оператора присвоїти
 d_copy["B"] = 5
@@ -180,7 +194,7 @@ d9["E"] = 7
 # print("D9 = ", d9)  # {'A': 1, 'B': 2, 'C': 3, 'E': 7}
 # print("D_copy = ", d_copy)  # {'A': 1, 'B': 5, 'C': 3}
 
-new = d9.items()
+new = d9.items() # сформує список пар [(ключ, значення)]
 # print(new)  # dict_items          ([('A', 1), ('B', 2), ('C', 3), ('E', 7)])
 new1 = dict.items(d9)  # dict_items ([('A', 1), ('B', 2), ('C', 3), ('E', 7)])
 # print(new1)
@@ -190,10 +204,10 @@ a = d9.keys()  # ('E', 7)
 
 item = d9.popitem()  # те саме що pop() у списків видалить і збереже в собі пару
 # в даному випадку останню. видаляє та повертає.
-# print(item)
+print("item",item) # ('E', 7)
 
-defoult = d9.setdefault("К", 5)  # додаються тількти нові ключі якщо подібних не було
-# print(defoult)
+defoult = d9.setdefault("К", 5)  # додаються тількти нові ключі якщо подібних немає
+print(defoult) #  5
 
 pop = d9.pop("e", 10)  # видаляє та повертає лише ключ. 10 прописано щоб не було
 # помилки коли такого ключа не буде
@@ -205,11 +219,16 @@ pop = d9.pop("e", 10)  # видаляє та повертає лише ключ.
 d9.update([("R", 7), ("Q", 9)])  # додав нові унікальні ключі-значення або перезапише існуючі
 # print(d9)
 
+"""
+setdefoult() додасть ключ:значення якщо таких немає, а update() додасть чи обновить у любому випадку.
+"""
+
+
 x = {"a": 1, "b": 2}
 y = {"b": 3, "c": 4}
 z = x.copy()
 z.update(y)
-# print(z)
+print(z) # {'a': 1, 'b': 3, 'c': 4}
 # x.update([("b", 3),("c",4)])
 
 zy = x | y  # обєднання двух словників в третій
@@ -250,8 +269,8 @@ d["salary"] = a.pop("salary")
 # print(slovnyk_new)
 slovnyk = {"name": "Kelly", "age": 25, "salary": 8000, "city": "New-York"}
 a = dict()
-a["name"]=slovnyk.pop("name")
-a["salary"]=slovnyk.pop("salary")
+a["name"] = slovnyk.pop("name")
+a["salary"] = slovnyk.pop("salary")
 # er = slovnyk.pop("city")
 # slovnyk.update([("Location", er)])
 # print(slovnyk)
@@ -318,8 +337,8 @@ for key, val in example1.items():
 # print(res)
 "*****"
 example2 = {"one": 1, "two": 2, "three": 3, "four": 4}
-res2 = {key: val for key, val in example2.items() if val <= 2}
-# print(res2)
+res2 = {key: val for key, val in example2.items() if val <= 2}# тому що .items() видає і ключ і значення
+print(res2)  #   .keys() .value() .items()
 
 # s = [10, 20, 30, 40]
 # a = {
@@ -384,16 +403,23 @@ b = {"a": 11, "b": 22, "c": 33, "d": 44, "e": 55}
 # print(k2, "->", v2)  # a -> 11
 
 
-"""        РОЗПАКУВАННЯ         """
 
+
+"""        РОЗПАКУВАННЯ         """
 
 pairs = [(1, 'a'), (2, "b"), (3, "c"), (4, "d")]
 a, b = zip(*pairs)  # ЗІРОЧКА ОЗНАЧАТИМЕ РОЗПАКУВАННЯ ПОСЛІДОВНОСТІ
 # print(a)  # (1, 2, 3, 4)
 # print(b)  # ('a', 'b', 'c', 'd')
 
+
+
+
 a = [3, 1, 4, 2]
 b = ['d', 'b', 'a', 'c']
+
+
+
 data = list(zip(a, b))
 # print(data)  # [(3, 'd'), (1, 'b'), (4, 'a'), (2, 'c')]
 data.sort()
@@ -412,7 +438,9 @@ pc = {'January': 46800, 'Fabruary': 45900, 'March': 43200}
 true_profit = None
 for (k1, v1), (k2, v2) in zip(ts.items(), pc.items()):
     true_profit = v1 - v2
-    print(true_profit)
+    print('Чистий прибуток',true_profit)#Чистий прибуток 5200
+                                        # Чистий прибуток 5100
+                                        # Чистий прибуток 4800
 
 month = ["January", 'February', "March"]
 total_sales = [52000.00, 51000.00, 48000.00]
@@ -422,8 +450,8 @@ for sales, cost, mon in zip(total_sales, production_cost, month):
     print("Загальний прибуток в ", mon, "=", res)
 
 one = {"apple": 0.04, "orange": 0.35, "pepper": 0.53}
-two = {"pepper": 0.20, "onion": 0.55}
-print({**two, **one})  # {'pepper': 0.2, 'onion': 0.55, 'apple': 0.04, 'orange': 0.35}
+two = {"pepper", 0.20, "onion", 0.55}
+print({**two, **one})  # {'pepper': 0.2, 'onion': 0.55, 'apple': 0.04, 'orange': 0.35} тільки СЛОВНИК
 for k, v in {**two, **one}.items():
     print(k, "->", v)
     # pepper -> 0.2
@@ -473,7 +501,7 @@ b = enumerate(a)
 print(b)  # <enumerate object at 0x000001B4FED71EC0>
 
 c = next(b)
-c1= next(b)
-print(c)  #  (0, 6)
+c1 = next(b)
+print(c)  # (0, 6)
 print(c1)  # (1, 7)
 print(type(c))

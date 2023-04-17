@@ -295,8 +295,8 @@ print_full_name("Iren", "Mackenzy")
 
 def args_decorator_TWO(fn):
     def wrap(*args, **kwargs):  # Зробить необхідну рорзпаковку
-        print("args:", args)
-        print("kwargs:", kwargs)
+        print("args:", args) # args: ('john', 'mackoley', 'Jane')
+        print("kwargs:", kwargs) # kwargs: {'study': 'java'}
         fn(*args, **kwargs)
 
     return wrap
@@ -310,3 +310,7 @@ def print_fullname_again(a, b, c, study="Python"):
 print_fullname_again("john", 'mackoley', "Jane", study="java")
 
 print_fullname_again("Iraklii", 'Tesla', "Janett")
+
+
+
+
