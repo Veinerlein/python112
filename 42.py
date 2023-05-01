@@ -304,78 +304,14 @@ result = s[0:firstH + 1] + reversed_pidstrok + s[lastH:]
 # ставлю перекручену підстроку
 print(result)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 my_string = "Мені 13 минало"
 reversed_string = my_string[::-1]
 # ЩОБ СПРАЦЮВАВ ДАНИЙ РЕВЕРС НЕОБХІДНО ЗАДАВАТИ ТІЛЬКИ ЦИФРУ КРОКУ З МІНУСОМ
 print(reversed_string)
 
 mY_string = "Замінити в цьому рядку усі наявні букви 'о' на букву 'О', окрім першого та останнього входження."
-st_first = mY_string.find("о") # Перше входження
-st_last = mY_string.rfind("о") # Друге входження
-my_result = mY_string[:st_first+1]+mY_string[st_first+1:st_last].replace("о","О")+mY_string[st_last:]
+st_first = mY_string.find("о")  # Перше входження
+st_last = mY_string.rfind("о")  # Друге входження
+my_result = mY_string[:st_first + 1] + mY_string[st_first + 1:st_last].replace("о", "О") + mY_string[st_last:]
 # Канкатенація
 print(my_result)
