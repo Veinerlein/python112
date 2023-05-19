@@ -150,7 +150,7 @@ rez = list(filter(lambda x: x % 15 == 0, liss))  # [45, 60, 105]
 print(rez)
 
 lisst = [45, 55, 60, 37, 100, 105, 220]
-rezult = list(filter(lambda i: not i % 15, lisst))  # [45, 60, 105]
+rezult = list(filter(lambda i: not i % 15, lisst))  # [45, 60, 105] i not True бо == 0
 print(rezult)
 
 l = [i for i in range(1, 11)]
@@ -189,7 +189,7 @@ test = hello
 print(test())  # Hello I am func 'Hello'
 
 
-# def my_decorator(func):
+# def my_decorator(func): # декорирувана функція
 #     def func_wrapper():
 #         print("Code before")
 #         func()
@@ -205,7 +205,7 @@ print(test())  # Hello I am func 'Hello'
 # general()
 
 
-def my_secorator(func):
+def my_secorator(func): # функція, що декорирує
     def func_wrapper():
         print("Code before")
         func()
@@ -214,8 +214,8 @@ def my_secorator(func):
     return func_wrapper
 
 
-@my_secorator
-def func_test():
+@my_secorator # декоратор # прийме функцію нижче без виклику в свої аргументи і надасть можливість в якій я викличу її
+def func_test(): # функція яку декорують
     print("Somethinf inside is happening")
 
 
@@ -224,8 +224,8 @@ def hello():
     print("Hello I am func 'Hello'")
 
 
-hello()
-func_test()
+hello() # ось тут я викликаю, а викликається secorator(hello)
+func_test() # ось тут я викликаю її, а викликається secorator(func_test)
 
 
 # general = my_secorator(func_test)

@@ -450,14 +450,300 @@ def Kiiv(k):
 
     return Zhitomir
 
+
 res = Kiiv('Kiiv')
 print(res())
-print(res())
-print(Kiiv('Kiiv'))
-print(Kiiv('Kiiv'))
-print(Kiiv('Zhitomir'))
+print(res())  # буде збільшуватись cnt оскільки функція як і її результат буде зберігатись у змінній res
+# без реєстрації у змінній, область у памяті так і залишиться областю памяті, і не реагуватиметься.
+print(Kiiv('Kiiv'))  # <function Kiiv.<locals>.Zhitomir at 0x000002D83C571360>
+# print(Kiiv('Kiiv')) тому що без круглих дужок викликаємо функцію
+print(Kiiv('Zhitomir'))  # <function Kiiv.<locals>.Zhitomir at 0x000002D83C571360>
 print(Kiiv("Kiiv")())
 print(Kiiv("Kiiv")())
 stingi = "proba"
 
 print(stingi.strip("b"))
+
+students = {
+    "Alice": 98,
+    "Bob": 67,
+    "David": 85,
+    "Chris": 75,
+    "Ella": 54,
+    "Fiona": 35,
+    "Grace": 69,
+}
+
+
+def outers(lower, upper):
+    def inner(exam):
+        return {k: v for k, v in exam.items() if lower <= v <= upper}
+
+    return inner
+
+
+a = outers(80, 100)
+b = outers(70, 80)
+c = outers(50, 700)
+d = outers(0, 50)
+print(a(students))
+print(b(students))
+print(c(students))
+print(d(students))
+
+
+def funcobj(a, b):
+    def add():
+        return a + b
+
+    def mul():
+        return a * b
+
+    def sub():
+        return a - b
+
+    def replace():  # ця функція по суті повязує, це як ланцюг для задіяння методів прописаних вище через .(назва функції)
+        pass  # і виклик
+
+    replace.add = add  # це код передбачення для імовірного виклику методу функції  print(obj1.add())
+    replace.sub = sub  # тобто це МеТоД запиту функції у середині функції, а виклик буде уже коли даю дужки print(obj1.add())
+    replace.mul = mul
+    return replace  # У replace попадає функція funcobj   #   print(funcobj(5, 2).add())  == 7
+
+
+obj1 = funcobj(5, 2)  # Записали сюди результат виведення функції funcobj, а саме replace.
+obj2 = funcobj(5, 2)
+obj3 = funcobj(5, 2)
+# print(obj1.add())
+print(obj1.add())  # 7 в обох випадках
+print(funcobj(5, 2).add())  # 7 відпрацював одинаково
+
+print((lambda x, y: x + y)(3, 5))
+print((lambda x, y: x ** 2 + y ** 2)(2, 5))
+summ = lambda a=1, b=2, c=3: a + b + c
+print(summ(30, c=10))
+print((lambda *args: args)(1, 2, "fgdd", 4))
+
+c = (lambda x: x * 2, lambda x: x * 3, lambda x: x * 4)
+for i in c:
+    print(i("10"))
+
+
+def inc(n):
+    return lambda x: x + n
+
+
+f = inc(42)
+print(f(2))
+
+print(inc(30)(3))
+
+
+def incognito(n):
+    return lambda x: x + n
+
+
+inc2 = (lambda n: (lambda x: x + n))
+
+print(inc2(10)(20))  # 10 впаде в n, а 20 у x
+
+print((lambda a: (lambda b: (lambda c: c + a + b)))(2)(4)(6))
+
+d = {"e": 10, "b": 15, "c": 4}
+list_d = list(d.items())
+print(list_d)
+list_d.sort(key=lambda i: i[1])
+print(list_d)
+
+a = [(lambda x, y: x + y), (lambda x, y: x - y), (lambda x, y: x * y), (lambda x, y: x / y)]
+b = a[2](12, 6)  # спрацює конкретно тільки множення
+print(b)
+
+print(type(lambda x, y: x + y))
+
+players = [{'name': 'Andron', 'last name': 'Buterin', 'rating': 9},
+           {'name': "Alexandr", 'last name': "Macedonian", 'rating': 10},
+           {'name': "Phrodo", 'last name': "Beggins", 'rating': 4},
+           {'name': "Michel", 'last name': 'Jexon', 'rating': 6}]
+
+# for d in players:
+#     print(d['last name'])
+# for person in d.items():
+#     print(person)
+print(players)
+print(players.sort(key=lambda x: x['rating'], reverse=True))  # None По суті,
+# це говорить, що будь-які мутації в списку можуть призвести до помилок сегментів,
+# і оскільки функція key може виконувати довільний код, список спорожняється.
+
+print(sorted(players, key=lambda x: x["rating"], reverse=True))  # has result
+# sortedлише обходить цю проблему, оскільки він негайно копіює список,
+# і таким чином «копія»
+# сортується. Це означає, що
+# оригінал players залишається цілим і його можна використовувати.
+
+a = {'one': lambda x: x - 1, 'two': lambda x: abs(x) - 1, 'three': lambda x: x}
+b = [-3, 10, 0, 1]
+for i in b:
+    if i < 0:
+        print(a['two'](i))
+    elif i > 0:
+        print(a["one"](i))
+    else:
+        print(a["three"](i))
+
+a1 = [lambda x: x - 1, lambda x: abs(x) - 1000, lambda x: x]
+b1 = [-3, 10, 0, 1]
+for i in b1:
+    if i < 0:
+        print(a1[1](i))
+    elif i > 0:
+        print(a1[0](i))
+    else:
+        print(a1[2](i))
+
+d = {
+    1: lambda: print("Monday"),
+    2: lambda: print("Tuesday"),
+    3: lambda: print("Wednesday"),
+    4: lambda: print("Thursday"),
+    5: lambda: print("Friday"),
+    6: lambda: print("Saturday"),
+    7: lambda: print("Sanday"),
+}
+f = (d[2])
+f()
+print(type(f))
+print(type(d))
+print((lambda a, b: a if a > b else b)(12, 13))
+
+print((lambda a, b, c: a if (a <= b) and (b <= c) else (b if (b <= a) and (b <= c) else c))(6, 2, 18))
+
+
+def mul(t):
+    return t * 2
+
+
+s = [2, 3, 132, -5, -8]
+ls = map(mul, s)  # пройдеться по послідовності і виконає функцію
+print(ls)
+print(set(ls))  # set() видалить дублікати, якщо такі існують
+
+# замість mul функції, ви користаємо lambda.
+print(list(map(lambda t: t * 2, s)))
+# можна кожен елемент любої послідовності обробити функцією map(), пізніше тільки вказати тип вихідних даних.
+
+areas = [3.46773, 5.67334, 4.543654, 56.1263442, 9.2345232, 32.6346546]
+res = list(
+    map(round, areas, range(1, len(areas) + 1)))  # третій аргумент у map() це аргумент функції, яка є аргументом у
+# map(), але аргумент повинен змінюватись як range() (взяли по довжині списку)
+# якщо діапазон поставити менший, то цикл пройде меншу кількість ітерацій
+print(res)
+
+rounded_areas = list(map(lambda x: round(x, 2), areas))
+print(rounded_areas)
+print(list(map(lambda x, y: x + y, [1, 5, 6], [2, 8, 4])))
+
+print(list(map(lambda x, y: x + y, ([1, 5, 6]), ([2, 8, 4]))))
+# filter працює як і map(), але не виконує опцій із даними, а просто повертає дані по конкретній умові.
+
+
+# print(r"C:\file.txt\") - Raw strings не дозволяють ставити слеш в кінці
+print(r"C:\file.txt\\"[:-1])  # C:\file.txt\
+print(r"C:\file.txt" + "\\")  # C:\file.txt\
+print("C:\\file.txt\\")  # C:\file.txt\
+
+name = 'Damian'
+print(f"my name is {name}")
+
+import math as m
+
+print(f"PI number is:{m.pi:.2f}")
+
+a = 75
+
+print(f"a char is {{{a}}}")  # a char is {75}
+
+
+def doc(a, b):
+    """
+    simple calculating
+    :param a: first parametr
+    :param b: second parametr
+    :return: result, sum of parameters
+    """
+    return a + b
+
+
+print(doc.__doc__)  # поверне усі задокументовані дані
+
+
+# print(ord.__doc__)  # Return the Unicode code point for a one-character string.
+
+
+#  СПИСКИ КАНКАТЕНУЮТЬСЯ
+
+def symbols(a=122, b=97):
+    return "-".join([chr(x) for x in range(b, a + 1)]) if a > b else " ".join([chr(x) for x in range(a, b + 1)])
+# JOIN РОБИТЬ з любого списку строку, і не треба ніякого map із print
+
+# simple code here
+"""
+def symbols_loop(a=122,b=97):
+    if a>b:
+        for x in range(b, a+1):
+            print(chr(x),end="..")
+    else:
+        for s in range(a, b+1):
+            print(chr(s),end="..")
+    print()
+symbols_loop()
+"""
+
+# вивід усіх символів між а і b
+print(symbols())
+
+def obmin(a="one two"):
+    res = "".join(a[a.find(" ")+1:] +" "+ a[:a.find(" ")])
+    return res
+
+def obmin2(a="one two"):
+    res = a.split(" ")
+    res = res[1]+" "+res[0]
+    return res
+
+a = "one two"
+print(a[a.find(" ")+1:] + " " + a[:a.find(" ")])
+print(obmin2())
+print(obmin())
+
+def exvert(s = "ab12c59p7bq"):
+    digits = []
+    for el in s:
+        try:
+            s = int(el)
+            digits.append(s)
+        except ValueError:
+            pass
+    return digits
+
+print(exvert())
+
+def exvert2(s = "ab12c59p7bq"):
+    digits = []
+    for el in s:
+        if el.isdigit():
+            digits.append(int(el))
+        else:
+            pass
+    return digits
+
+def extract(s= "ab12c59p7bq"):
+    digits = []
+    for ii in s:
+        if ii in "0123456789": # could be method "0123456789".find(ii)
+            digits.append(int(ii))
+    return digits
+print(exvert2())
+print(extract())
+
+

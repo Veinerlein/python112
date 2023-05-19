@@ -78,7 +78,6 @@ x = 13
 y = 3
 
 print(f"{x}/{y} = {round(x / y, 2)}")  # 13/3 = 4.33
-
 a = [1, 2, 3, 4, 5, 6]
 print(f"Third element {a[2] * 2}")  # Third element 6
 
@@ -175,6 +174,8 @@ print(summ)
 print(l_ASCII)
 print(f"{serarph:.0f}")
 print(round(serarph))
+
+print("+++++++++++++++++++++++")
 cnt = 0
 symbols = ""
 # while cnt<3:
@@ -317,7 +318,21 @@ vs = 'Send unlimited free texts and make WiFi calls from a free phone number. Do
 if vs.count('f') == 1:
     print(vs.find('f'))
 elif vs.count('f') >= 2:
-    print(vs.find('f'), vs.rfind('f')) # print(vs.index('f'), vs.rindex('f'))
+    print(vs.find('f'), vs.rfind('f'))  # print(vs.index('f'), vs.rindex('f'))
 
 
+
+def obmin(a="one two"):
+    res = "".join(a[a.find(" ")+1:] +" "+ a[:a.find(" ")])
+    return res
+
+def obmin2(a="one two"):
+    res = a.split(" ")
+    res = res[1]+" "+res[0]
+    return res
+
+a = "one two"
+print(a[a.find(" ")+1:] + " " + a[:a.find(" ")])
+print(obmin2())
+print(obmin())
 
