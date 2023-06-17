@@ -746,4 +746,12 @@ def extract(s= "ab12c59p7bq"):
 print(exvert2())
 print(extract())
 
-
+print("MArteta MikelM".strip("M"))
+string = "MArteta MikelM"
+rez = ""
+for s in string:
+    if s.isspace():
+        pass
+    else:
+        rez+=s
+print(rez.strip("M"))
