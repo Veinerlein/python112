@@ -9,8 +9,7 @@ file_path = r"E:\pythonProject1\les\Name2.docx"
 file_type = guess_type(file_path)
 print(file_type[0])
 def pereklad_txt(file_path):
-    # Типи файлу, які отримаємо на виході із перекладом
-    types_of_files = {1:".txt",2:".docx"}
+
     # Вибір мови згадно світом зазначений скорочень
     language_code = input("Choose language you want to see in short style,(uk for Ukrainian, for example):_")
 
@@ -46,9 +45,8 @@ def pereklad_txt(file_path):
     print('Переклад завершено!')
 
 def pereklad_doc(file_path):
-    # Типи файлу, які отримаємо на виході із перекладом
-    types_of_files = {1:".txt",2:".docx"}
-    # Вибір мови згадно світом зазначений скорочень
+
+    # Вибір мови згадно світом зазначених скорочень
     language_code = input("Choose language you want to see in short style,(uk for Ukrainian, for example):_")
 
     # Вибрати ім'я файлу, що збережеться
@@ -85,8 +83,13 @@ def pereklad_doc(file_path):
 
 
 
-if file_type[0] == "text/plain":
+if file_type[0] == "text/plain": # перевірка типу файлу.
     pereklad_txt(file_path)
 else:
     pereklad_doc(file_path)
+
+"""
+На майбутнє
+Оформити усе однією функцією, яка буде міняти логіку кодування відносно розштрення аргументу (який тип файлу попаде)
+"""
 
