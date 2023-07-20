@@ -596,6 +596,10 @@ class Cats:
         [print(f"{k} : {v}") for k, v in d.items()]
         print('='*40)
         {print(k,":",v) for k,v in d.items()}
+        print()
+        [print(k,":",v) for k,v in self.__dict__.items()]
+
+
 
     def print_info(self):
         print(f"Hello my name is {self.__name}. I am {self.__age} years old.\n"
