@@ -188,56 +188,22 @@ print(re2.border)
 re2.height = 3
 
 
-class Time:
-    """Class for work with time in format Hour:minute:Second"""
-    number = 0
-    time_zone: str = f"UTC{number}"
-    import time
-
-    def __init__(self, hour: str, minut: str, seconds: str):
-        self.hour = hour
-        self.minut = minut
-        self.seconds = seconds
-        self.print_info()
-
-    def __del__(self):
-        print("Момент часу видалений Delete Exempl " + self.__class__.__name__)
-
-    def print_info(self):
-        print(f"{Time.time_zone}\n{self.hour}\n{self.minut}\n{self.seconds}")
-
-    @classmethod
-    def time_zon(cls, znak: str, n: str):
-        if znak == "+" or "-":
-            cls.number = int(f"{znak}{n}")
-        else:
-            raise ValueError(f"{znak} has to be '+' or '-' in string format\n{n} has to be string format")
-
-    @staticmethod
-    def chack_v():
-        pass
-
-    @staticmethod
-    def change_format():
-        pass
-
-
 class Liquid:  # створений клас рідина
 
     def __init__(self, name, density):
         self._name = name
         self._density = density  # густина
 
-    def change_density(self, new_gust): # метод зміни густини
+    def change_density(self, new_gust):  # метод зміни густини
         self._density = new_gust
 
     def v_liquid(self, m):  # визначення об'єму від заданої маси
-        ret = self._density/m
+        ret = m / self._density
         print(f"Oб'єм {m} kg {self._name} становить {ret} m^3")
         return ret
 
     def m_liquid(self, v):  # визначення маси від заданого об'єму
-        res = v* self._density
+        res = v * self._density
         print(f"Маса {v} m^3 {self._name} становить {res} kg")
         return res
 
@@ -245,13 +211,13 @@ class Liquid:  # створений клас рідина
         print(f" рідина {self._name} густина = {self._density} kg/m^3")
 
 
-class Alcohol(Liquid):
+class Alcohol(Liquid):  # продукований клас від класу Рідина, клас наслідник Алкоголь
 
     def __init__(self, name, density, promile):
         super().__init__(name, density)
         self.promile = promile
 
-    def change_promile(self, new_promile):
+    def change_promile(self, new_promile):  # зміна вмісту алкоголю
         self.promile = new_promile
 
 
@@ -442,7 +408,7 @@ liq2.print_info()
 liq1.change_density(1000)
 liq1.m_liquid(0.5)
 liq1.v_liquid(300)
-print("3" * 67)
+print("3" * 67)  # 33333333333333333333333333333333333333333333333333
 a1 = Alcohol("Wine", 1064.2, 14)
 a1.change_density(1000)
 a1.v_liquid(300)
@@ -468,3 +434,263 @@ print(v)
 print(v1)
 # print(v2)
 print(type(v))  # <class '__main__.Vector'>
+
+
+def calling_times(n):
+    def wrapp(func):
+        print(f"Now will be something {n} times")
+        cnt = 0
+
+        def inner(*args):
+            for _ in range(n):
+                func(*args)
+                nonlocal cnt
+                cnt += 1
+            print(f"The end, Counter is {cnt}")
+            return func(*args), print("...again, its surprise from me")
+
+        return inner
+
+    return wrapp
+
+
+# @wrapp
+@calling_times(3)
+def say_someth(say):
+    print(f"{say}")
+
+
+say_someth("Hallo")
+
+
+def add_number(a):
+    def add(b):
+        return a + b
+
+    return add
+
+
+add = add_number(4)  # тут a
+print(add(3))  # Тут b
+
+import time
+import datetime
+import re
+
+
+class Time:
+    """Class for work with time in format Hour:minute:Second"""
+    number = 0
+    time_zone: str = f"UTC{number}"
+    import time
+
+    def __init__(self, time: str, hour=0, minute=0, second=0):
+        self.check_v(time)
+
+        self.time = time
+        self.hour, self.minute, self.second = map(int, (f"{self.time}".split(":")))
+        self.print_info()
+
+    def __del__(self):
+        print("Момент часу видалений Delete Exempl " + self.__class__.__name__)
+
+    def print_info(self):
+        print(f"{self.hour:02}:{self.minute:02}:{self.second:02}")
+
+    @staticmethod
+    def counter(iters, value):
+        cnt = 0
+        for s in iters:
+            if s == value:
+                # global cnt
+                cnt += 1
+            else:
+                pass
+        return cnt
+
+    @classmethod
+    def from_string(cls, time_as_str):
+        hour, minute, second = map(int, time_as_str.split(":"))
+        time1 = hour, minute, second
+        return time1
+
+    @classmethod
+    def time_zon(cls, znak: str, n):  # time_zone changer
+        try:
+            cls.number += int(f"{znak}{n}")
+            print(cls.number)
+            cls.time_zone = f"UTC{cls.number}"
+        except ValueError:
+            print(f"{znak} has to be changed to '+' or '-' in string format, and {n} to '{n}' either")
+
+    @classmethod
+    def check_v(cls, x):
+        if not isinstance(x, str):
+            raise TypeError(f"{x} should be string format")
+        if not cls.counter(x, ":") == 2:
+            raise TypeError("Time format is incorrect, ':' has to be 2")
+        elements = x.split(":")
+        for e in elements:
+            if not len(e) == 2:
+                raise TypeError("Time format is incorrect, use time format XX:XX:XX")
+        hour, minute, second = map(int, (x.split(":")))
+        if hour > 24 or minute > 60 or second > 60:
+            raise ValueError("Time points have to be in range hour:24, minute:60, second:60 ")
+
+    @staticmethod
+    def is_valid(x):
+        if x.count(":") == 2:
+            return x
+        else:
+            return False
+
+    def total_seconds(self):
+        return self.hour * 3600 + self.minute * 60 + self.second
+
+    def sum_seconds(self, self2):
+        return self + self2
+
+    def __add__(self, other):
+        return self.total_seconds() + other.total_seconds()
+
+    @staticmethod
+    def change_format_toseconds(a):
+        hour, minute, second = map(int, a.split(":"))
+        time_res = (hour * 3600) + (minute * 60) + second
+        return time_res
+
+    @staticmethod
+    def from_seconds_to_usuall(secunds):
+        # return time.strftime("%H:%M:%S", time.localtime(secunds))
+        hours = secunds // 3600
+        minutes = (secunds % 3600) // 60
+        rem_secunds = secunds % 60
+        return f"{hours:02}:{minutes:02}:{rem_secunds:02}"
+
+    def difference(self, self2):
+        print(self - self2)
+
+    def __sub__(self, other):
+        return abs(self.total_seconds() - other.total_seconds())
+
+
+print(Time.check_v("04:15:13"))
+
+t1 = Time("18:00:34")
+print(t1.hour, "WHAAAAAAAAAAAAAAAAAT")
+t2 = Time('17:34:12')
+t3 = Time("09:33:45")
+print(Time.difference(t1, t3))
+print("Сума часу", t2 + t3)
+print(Time.from_seconds_to_usuall(t1 - t2))  # 00:26:22
+print(t1 - t2)  # завдяки магічному методу __sub__()
+print(t2)
+print(t1.__dict__)
+Time.time_zon("-", "2")
+print(Time.time_zone)
+print(t1.from_string("23:44:15"))
+# print(t1)
+print(Time.change_format_toseconds("18:01:34"))
+print(Time.from_seconds_to_usuall(65434))
+
+seconds_output = Time.change_format_toseconds("18:10:34")
+time_output = Time.from_seconds_to_usuall(65434)
+
+
+class Pair:
+    A = 1
+    B = 1
+
+    @classmethod
+    def a_chenger(cls, x):
+        cls.A = x
+
+    @classmethod
+    def b_chenger(cls, x):
+        cls.B = x
+
+    @classmethod
+    def summ(cls):
+        return cls.B + cls.A
+
+    @classmethod
+    def dobutok(cls):
+        return cls.A * cls.B
+
+
+import math
+
+
+class Right_Triangle(Pair):
+
+    @classmethod
+    def hipot(cls):
+        return math.sqrt(cls.A ** 2 + cls.B ** 2)
+
+    @classmethod
+    def area(cls):
+        return cls.A * cls.B / 2
+
+    @classmethod
+    def print_info(cls):
+        print(cls.hipot(),
+              cls.summ(),
+              cls.area(),
+              cls.dobutok(), sep="\n")
+
+
+one = Right_Triangle()
+one.B = 5  # далі 1     помінялось тільки в локальній зоні об'єкта, але не у класі
+Right_Triangle.A = 8  # тепер тут 8, але зміниться тільки для дочірнього класу
+print(Pair.A)  # тут далі 1
+print(one.__dict__)  # {'B': 5} це локальна зона об'єкту, на класові змінні не впливає, немає self
+
+# тепер зміню через класметоди
+
+one.a_chenger(5)
+one.b_chenger(8)
+one.print_info()
+
+print("=" * 78)  # =================================================================
+
+
+class Pairs:
+
+    def __init__(self, a, b):
+        self.A = a
+        self.B = b
+
+    def set_A(self, x):
+        self.A = x
+
+    def set_B(self, x):
+        self.B = x
+
+    def summ(self):
+        return self.B + self.A
+
+    def dobutok(self):
+        return self.A * self.B
+
+
+class Triangle(Pairs):
+
+    def __init__(self, a, b):
+        super().__init__(a, b)
+
+    def hipot(self):
+        return math.sqrt(self.A ** 2 + self.B ** 2)
+
+    def area(self):
+        return self.A * self.B / 2
+
+    def print_info(self):
+        print(self.hipot(),
+              self.summ(),
+              self.area(),
+              self.dobutok(), sep="\n")
+
+
+two = Triangle(8, 5)
+print(two.__dict__)  # {'A': 8, 'B': 5}
+two.print_info()

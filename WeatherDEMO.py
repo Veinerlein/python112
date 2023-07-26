@@ -83,3 +83,17 @@ info = Label(frame1, text="Information",bg='#ffb700', font=40, height=10,width=5
 info.pack()
 info.bind("<Button-1>", text_appear_again)
 root.mainloop()
+
+
+
+
+
+
+
+
+
+
+
+
+
+

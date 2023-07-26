@@ -194,6 +194,7 @@ class Date:
     def from_string(cls, data_as_str):
         day, month, year = map(int, data_as_str.split("."))
         date1 = cls(day, month, year)
+
         return date1
 
     def string_to_db(self):
@@ -229,11 +230,12 @@ print(date.string_to_db())
 
 d1 = Date()
 date1 = d1.from_string("02.12.2020")
-print(date1.string_to_db())
+print(date1.string_to_db()) # 2020-12-2
 
 date2 = Date.from_string("15.10.2021")  # date2 не є екземпляром класу, це просто змінна, не є екземпляром класу тому,
 # що не було виклику Date()
-print(date2.string_to_db())
+print(date2)
+print(date2.string_to_db()) # 2021-10-15
 
 """self - відноситься до екземпляру класу а 
  cls - просто до класу
