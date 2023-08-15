@@ -550,7 +550,7 @@ class Time:
     def sum_seconds(self, self2):
         return self + self2
 
-    def __add__(self, other):
+    def __add__(self, other): # Додав можливість додавання екземплярів класу
         return self.total_seconds() + other.total_seconds()
 
     @staticmethod
@@ -570,7 +570,7 @@ class Time:
     def difference(self, self2):
         print(self - self2)
 
-    def __sub__(self, other):
+    def __sub__(self, other): # додав оператор віднімання для екземплярів
         return abs(self.total_seconds() - other.total_seconds())
 
 
