@@ -378,13 +378,16 @@ f = list()
 #
 [f.append(x) for x in [f1, f2, f3]]
 for table in f:
-    print("ПОкуажись",table.area())
+    print("ПОкуажись", table.area())
 
 
 class Root(ABC):
 
     def __init__(self, equation: str):
         self.equation = equation
+
+
+
 
     @abstractmethod
     def line_equation(self):
@@ -394,14 +397,34 @@ class Root(ABC):
     def sq_equation(self):
         pass
 
-    @abstractmethod
     def valid(self):
-        pass
+        if "**2" in self.equation:
+            print("Square equation")
+            self.sq_equation()
+        else:
+            print("line equation")
+            self.line_equation()
+
+
+    @staticmethod
+    def Discriminant(a, b, c):
+        return b ** 2 - 4 * a * c
+
+    @staticmethod
+    def results(a, b, D):
+        if D >= 0:
+            x1 = (-b + D ** 0.5) / (2 * a)
+            x2 = (-b - D ** 0.5) / (2 * a)
+            return x1, x2
+        else:
+            x1 = None
+            x2 = None
+            return x1, x2
 
 
 class LineEquation(Root):
-    def __init__(self, equation):
-        super().__init__(equation)
+    # def __init__(self, equation):
+    #     super().__init__(equation)
 
     def line_equation(self):
         leftside = self.equation.split("=")[0]
@@ -420,15 +443,17 @@ class LineEquation(Root):
             x = (int(c[1:]) + int(rightside)) / int(b)
             return round(x, 2)
 
-    @staticmethod
-    def Discriminant(a, b, c):
-        return b ** 2 - 4 * a * c
+    def sq_equation(self):
+        pass
 
-    @staticmethod
-    def results(a, b, D):
-        x1 = (-b + D ** 0.5) / (2 * a)
-        x2 = (-b - D ** 0.5) / (2 * a)
-        return x1, x2
+    def print_info(self):
+        root = self.line_equation()
+        print(f"The root of {self.equation} is {root}")
+
+class Sq_equation(Root):
+    # def __init__(self, equation):
+        # super().__init__(equation)
+
 
     def sq_equation(self):
         leftside = self.equation.split("=")[0]
@@ -437,29 +462,24 @@ class LineEquation(Root):
         r = leftside.replace("-", "+-")
         b = int(r.split("+")[1].removesuffix("x"))
         c = int(r.split("+")[2]) + (-1 * int(rightside))
-        D = b ** 2 - 4 * a * c
-        if D < 0:
-            x1 = None
-            x2 = None
-        elif D == 0:
-            x1 = x2 = (-b + D ** 0.5) / (2 * a)
+        # D = b ** 2 - 4 * a * c
+        D = self.Discriminant(a, b, c)
+        return self.results(a, b, D)
+
+    def print_info(self):
+        roots = self.sq_equation()
+        if roots[0] is not None:
+            print(f"The roots of {self.sq_equation()} are : {roots[0]} and {roots[1]}")
         else:
-            x1 = (-b + D ** 0.5) / (2 * a)
-            x2 = (-b - D ** 0.5) / (2 * a)
-        return round(x1, 2), round(x2, 2)
+            print(f"The equation {self.sq_equation()} does not have real roots")
+        # print(f"The roots of {self.equation} are: {self.sq_equation()[0]} and {self.sq_equation()[1]}")
 
-    def valid(self):
-        if "**2" in self.equation:
-            print("Square equation")
-            self.sq_equation()
-        else:
-            print("line equation")
-            self.line_equation()
+    def line_equation(self):
+        pass
 
-
-class SqEquation(Root):
-    pass
-
-
-l = LineEquation("1x**2-2x-3=0")
-print(l.sq_equation())
+S = Sq_equation("1x**2-2x-3=0")
+print(S.sq_equation())
+L = LineEquation('7x-3=56')
+print(L.line_equation())
+S.print_info()
+L.print_info()
