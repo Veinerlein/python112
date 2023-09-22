@@ -58,8 +58,8 @@ p3.set_curts(5, 10)
 p4 = Point()
 p4.set_curts(3, 8)
 
-print(p3.__dict__)
-print(p4.__dict__)
+print(p3.__dict__)  # {'x': 5, 'y': 10}
+print(p4.__dict__)  # {'x': 3, 'y': 8}
 
 
 class Human:
@@ -204,7 +204,7 @@ class Book:
         print(f"Вивід даних: {self.name_of_the_book}\n{self.year}\n{self.publisher}\n{self.genre}\n{self.autor}\n"
               f"{self.price}")
 
-    def set_info(self, name,year, publisher,genre,autor, price):
+    def set_info(self, name, year, publisher, genre, autor, price):
         self.name_of_the_book = name
         self.year = year
         self.publisher = publisher
@@ -214,14 +214,19 @@ class Book:
 
     def get_name(self):
         print(self.name_of_the_book)
+
     def get_year(self):
         print(self.year)
+
     def get_publisher(self):
         print(self.publisher)
+
     def get_genre(self):
         print(self.genre)
+
     def get_autor(self):
         print(self.autor)
+
     def get_price(self):
         print(self.price)
 
@@ -253,8 +258,8 @@ p2.add_skill_point(2)
 class Pointer:
     count = 0  # статична властивість
 
-    def __new__(cls, *args, **kwargs): # прописується програмістами тільки для створення метакласів,
-        print("Constructor")  #  А взагальному, то виконується сам по собі по замовчуванні
+    def __new__(cls, *args, **kwargs):  # прописується програмістами тільки для створення метакласів,
+        print("Constructor")  # А взагальному, то виконується сам по собі по замовчуванні
         return super().__new__(cls)
 
     def __init__(self, x=0, y=0):  # динамічні властивості
@@ -355,7 +360,6 @@ del droid1
 del droid2
 
 print("Quantity of robots:", Robot.k)
-
 
 b1 = Book()
 

@@ -1,233 +1,258 @@
-from abc import ABC, abstractmethod
-
-
-class Currency(ABC):
-
-    def __init__(self, value):
-        self.value = value
-
-    @abstractmethod
-    def print_info(self):
-        pass
-
-    @abstractmethod
-    def change(self, x: str, x_currency: float = 37.7):
-        raise NotImplementedError("'str' object has no attribute 'change'")
-
-
-class Dollar(Currency):
-
-    def __init__(self, value):
-        super().__init__(value)
-
-    def print_info(self):
-        print(self.value)
-
-    def change(self, x: str = "USD", x_currency: float = 37.7):
-        res = self.value * x_currency
-        print(f"{self.value} {x} = {res:.2f} UAH")
-        return res
-
-
-class Euro(Currency):
-
-    def __init__(self, value):
-        super().__init__(value)
-
-    def print_info(self):
-        print(self.value)
-
-    def change(self, x: str = "EUR", x_currency: float = 39.7):
-        res = self.value * x_currency
-        print(f"{self.value} {x} = {res:.2f} UAH")
-        return res
-
-
-curr1 = Dollar(5)
-curr2 = Dollar(10)
-curr3 = Dollar(50)
-curr4 = Dollar(100)
-
-curr5 = Euro(5)
-curr6 = Euro(10)
-curr7 = Euro(50)
-curr8 = Euro(100)
-
-currency = list()
-[currency.append(x) for x in [curr1, curr2, curr3, curr4, f'{"*" * 78}', curr5, curr6, curr7, curr8]]
-
-for cur in currency:
-    try:
-        cur.change()
-    except:
-        print(f'{"*" * 78}')
-
-
-# """Tech Decision"""
-
-class CurrEncy(ABC):
-    def __init__(self, value):
-        self.value = value
-
-    @abstractmethod
-    def convert_uah(self):
-        pass
-
-    def print_value(self):
-        print(self.value, end="")
-
-
-class Dollars(CurrEncy):
-    rate_to_uah = 37.7
-    suffix = "USD"
-
-    def convert_uah(self):
-        uah = self.value * Dollars.rate_to_uah
-        return uah
-
-    def print_value(self):
-        super().print_value()
-        print(Dollars.suffix, end=" ")
-
-
-class EUR(CurrEncy):
-    rate_to_uah = 39.7
-    suffix = "EUR"
-
-    def convert_uah(self):
-        uah = self.value * EUR.rate_to_uah
-        return uah
-
-    def print_value(self):
-        super().print_value()
-        print(EUR.suffix, end=" ")
-
-
-d = [Dollars(5), Dollars(10), Dollars(50), Dollars(100)]
-e = [EUR(5), EUR(10), EUR(50), EUR(100)]
-print("*" * 50)
-for elem in d:
-    elem.print_value()
-    print(f"= {elem.convert_uah():.2f} UAH")
-print("*" * 50)
-for elem in e:
-    elem.print_value()
-    print(f"= {elem.convert_uah():.2f} UAH")
-
-print("*" * 78)  # **************************************************
-
-""" INTERFACE - абстрактний клас, у якого жоден метод не реалізований, шаблон, де всі дочірні класи матимуть 
-абстрактні методи"""
-
-from abc import ABC, abstractmethod
-
-
-class IFather(ABC):
-    @abstractmethod
-    def display1(self):
-        pass
-
-    @abstractmethod
-    def display2(self):
-        pass
-
-
-class Child(IFather):
-    def display1(self):
-        print("Child class")
-        print("Display 1 Abstract Method")
-
-
-class GrandChild(Child):
-    def display2(self):
-        print("Child class")
-        print("Display 2 Abstract Method")
-
-
-gc = GrandChild()
-gc.display2()
-gc.display1()
-
-print("=" * 67)  # =====================================================
-
-
-class MyOuter:
-    age = 18
-
-    def __init__(self, name):
-        self.name = name
-
-    @classmethod
-    def outer_class_method(cls):
-        print("Out class Method")
-
-    def outer_obj_method(self):
-        print("Connection method with outer class object")
-
-    class MyInner:
-        def __init__(self, inner_name, obj):
-            self.inner_name = inner_name
-            self.obj = obj
-
-        def inner_method(self):
-            print("Inside class method")
-            MyOuter.outer_class_method()
-            self.obj.outer_obj_method()
-            print(self.obj.name)
-
-
-out = MyOuter("OUTER")
-inner = out.MyInner("INNER", out)
-# print(inner.inner_name) # INNER
-
-""" ДО ВКЛАДЕНОГО КЛАСУ ЗВЕРТАЄМОСЬ ЧЕРЕЗ ЕКЗЕМПЛЯР БАТЬКІВСЬКОГО КЛАСУ """
-
-inner.inner_method()
-
-print("=" * 87)  # =============================================
-
-
-class Employee:
-    def __init__(self):
-        self.name = "Employee"
-        self.intern = self.Intern()  # цілий клас є екземпляром, у атрибут класу Employee попадає
-        # цілий ініт класу Intern
-        self.head = self.Head()  # а тут екземпляр класу Head
-        # Можна використовувати методи відповідних класів
-
-    def show(self):
-        print("Employee list")
-        print("Name:", self.name)
-
-    class Intern:
-        def __init__(self):
-            self.name = "Smith"
-            self.id = "657"
-
-        def display(self):
-            print("name:", self.name)
-            print("Degree:", self.id)
-
-    class Head:
-
-        def __init__(self):
-            self.name = "Alan"
-            self.id = "570"
-
-        def display(self):
-            print("name:", self.name)
-            print("Degree:", self.id)
-
-
-outer = Employee()
-outer.show()
-
-d1 = outer.intern
-d2 = outer.head
-d1.display()
-d2.display()
-
-print("+" * 87)  # =============================================================
+# from abc import ABC, abstractmethod
+#
+#
+# class Currency(ABC):
+#
+#     def __init__(self, value):
+#         self.value = value
+#
+#     @abstractmethod
+#     def print_info(self):
+#         pass
+#
+#     @abstractmethod
+#     def change(self, x: str, x_currency: float = 37.7):
+#         raise NotImplementedError("'str' object has no attribute 'change'")
+#
+#
+# class Dollar(Currency):
+#
+#     def __init__(self, value):
+#         super().__init__(value)
+#
+#     def print_info(self):
+#         print(self.value)
+#
+#     def change(self, x: str = "USD", x_currency: float = 37.7):
+#         res = self.value * x_currency
+#         print(f"{self.value} {x} = {res:.2f} UAH")
+#         return res
+#
+#
+# class Euro(Currency):
+#
+#     def __init__(self, value):
+#         super().__init__(value)
+#
+#     def print_info(self):
+#         print(self.value)
+#
+#     def change(self, x: str = "EUR", x_currency: float = 39.7):
+#         res = self.value * x_currency
+#         print(f"{self.value} {x} = {res:.2f} UAH")
+#         return res
+#
+#
+# curr1 = Dollar(5)
+# curr2 = Dollar(10)
+# curr3 = Dollar(50)
+# curr4 = Dollar(100)
+#
+# curr5 = Euro(5)
+# curr6 = Euro(10)
+# curr7 = Euro(50)
+# curr8 = Euro(100)
+#
+# currency = list()
+# [currency.append(x) for x in [curr1, curr2, curr3, curr4, f'{"*" * 78}', curr5, curr6, curr7, curr8]]
+#
+# for cur in currency:
+#     try:
+#         cur.change()
+#     except:
+#         print(f'{"*" * 78}')
+#
+#
+# # """Tech Decision"""
+#
+# class CurrEncy(ABC):
+#     def __init__(self, value):
+#         self.value = value
+#
+#     @abstractmethod
+#     def convert_uah(self):
+#         pass
+#
+#     def print_value(self):
+#         print(self.value, end="")
+#
+#
+# class Dollars(CurrEncy):
+#     rate_to_uah = 37.7
+#     suffix = "USD"
+#
+#     def convert_uah(self):
+#         uah = self.value * Dollars.rate_to_uah
+#         return uah
+#
+#     def print_value(self):
+#         super().print_value()
+#         print(Dollars.suffix, end=" ")
+#
+#
+# class EUR(CurrEncy):
+#     rate_to_uah = 39.7
+#     suffix = "EUR"
+#
+#     def convert_uah(self):
+#         uah = self.value * EUR.rate_to_uah
+#         return uah
+#
+#     def print_value(self):
+#         super().print_value()
+#         print(EUR.suffix, end=" ")
+#
+#
+# d = [Dollars(5), Dollars(10), Dollars(50), Dollars(100)]
+# e = [EUR(5), EUR(10), EUR(50), EUR(100)]
+# print("*" * 50)
+# for elem in d:
+#     elem.print_value()
+#     print(f"= {elem.convert_uah():.2f} UAH")
+# print("*" * 50)
+# for elem in e:
+#     elem.print_value()
+#     print(f"= {elem.convert_uah():.2f} UAH")
+#
+# print("*" * 78)  # **************************************************
+#
+# """ INTERFACE - абстрактний клас, у якого жоден метод не реалізований, шаблон, де всі дочірні класи матимуть
+# абстрактні методи"""
+#
+# from abc import ABC, abstractmethod
+#
+#
+# class IFather(ABC):
+#     @abstractmethod
+#     def display1(self):
+#         pass
+#
+#     @abstractmethod
+#     def display2(self):
+#         pass
+#
+#
+# class Child(IFather):
+#     def display1(self):
+#         print("Child class")
+#         print("Display 1 Abstract Method")
+#
+#
+# class GrandChild(Child):
+#     def display2(self):
+#         print("Child class")
+#         print("Display 2 Abstract Method")
+#
+#
+# gc = GrandChild()
+# gc.display2()
+# gc.display1()
+#
+# print("=" * 67)  # =====================================================
+
+
+# class MyOuter:
+#     age = 18
+#
+#     def __init__(self, name):
+#         self.name = name
+#
+#     @classmethod
+#     def outer_class_method(cls):
+#         print("Out class Method")
+#
+#     def outer_obj_method(self):
+#         print("Connection method with outer class object")
+#
+#     class MyInner:
+#         def __init__(self, inner_name, obj):
+#             self.inner_name = inner_name
+#             self.obj = obj  # зв'язкова змінна у яку попаде екземпляр батьківського класу
+#
+#         @classmethod
+#         def inner_class_method(cls):
+#             print("Inner class Method")
+#
+#         def inner_method(self):
+#             print()
+#             print("Inner method!")  # Inner method
+#             MyOuter.outer_class_method()  # Out class Method
+#             self.obj.outer_obj_method()  # Connection method with outer class object
+#             print(self.obj.name)  # OUTER
+#             print(self.inner_name)  # INNER
+#             print(
+#                 "=" * 98)  # ==================================================================================================
+#
+#         class Very_Inner:
+#             def __init__(self, very_inner_name, obj2):
+#                 self.vin = very_inner_name
+#                 self.obj2 = obj2  # зв'язкова змінна у яку попаде екземпляр батьківського класу
+#
+#             def very_inner_method(self):
+#                 print("Very Inner method")  # Very Inner method
+#                 MyOuter.MyInner.inner_class_method()  # Inner class Method
+#                 print(self.obj2.inner_name)  # INNER
+#                 print(MyOuter.age)
+#                 MyOuter.outer_obj_method(self)  # Connection method with outer class object
+#                 self.obj2.inner_method()
+#                 print("+" * 78)  # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+#
+#
+# out = MyOuter("OUTER")
+# inner = out.MyInner("INNER", out)
+# very_inner = inner.Very_Inner("Very_inner", inner)
+# # print(inner.inner_name) # INNER
+# inner.inner_method()
+# very_inner.very_inner_method()
+#
+# """ ДО ВКЛАДЕНОГО КЛАСУ ЗВЕРТАЄМОСЬ ЧЕРЕЗ ЕКЗЕМПЛЯР БАТЬКІВСЬКОГО КЛАСУ """
+#
+# # inner.inner_method()
+#
+# print("=" * 87)  # =============================================
+#
+#
+# class Employee:
+#     def __init__(self):
+#         self.name = "Employee"
+#         self.intern = self.Intern()  # цілий клас є екземпляром, у атрибут класу Employee попадає
+#         # цілий ініт класу Intern
+#         self.head = self.Head()  # а тут екземпляр класу Head
+#         # Можна використовувати методи відповідних класів
+#
+#     def show(self):
+#         print("Employee list")
+#         print("Name:", self.name)
+#
+#     class Intern:
+#         def __init__(self):
+#             self.name = "Smith"
+#             self.id = "657"
+#
+#         def display(self):
+#             print("name:", self.name)
+#             print("Degree:", self.id)
+#
+#     class Head:
+#
+#         def __init__(self):
+#             self.name = "Alan"
+#             self.id = "570"
+#
+#         def display(self):
+#             print("name:", self.name)
+#             print("Degree:", self.id)
+#
+#
+# outer = Employee()
+# outer.show()
+#
+# d1 = outer.intern
+# d2 = outer.head
+# d1.display()
+# d2.display()
+#
+# print("+" * 87)  # =============================================================
 
 
 class Geeksforgeeks:
@@ -257,10 +282,12 @@ inner1 = outer.inner
 inner1.show()
 
 inner_inner1 = inner1.inner_inner
-inner_inner1.show()
+inner_inner1.show()  # This is an inner class of inner class
 print("new:", end=" ")
 sample = Geeksforgeeks().inner.inner_inner
-sample.show()
+sample.show()  # This is an inner class of inner class
+outer.inner.inner_inner.show()  ## This is an inner class of inner class
+print("=" * 78)  # ++++++++++++++++++++++++++++++++++++++
 
 
 class Computer:
@@ -326,7 +353,7 @@ class SubClass(Base):
 a = SubClass()  # In SubClass
 a.display()  # In Base class
 
-b = a.db
+b = a.db  #  SubClass().self.Inner1()
 b.display1()  # Inner_of_Base class
 # b.display2() # Якби Inner1 та Inner2 називались одинаково, то метод display2 можна
 # було б викликати через атрибут db
@@ -396,7 +423,7 @@ d = Dog("Buddy")
 d.bark()
 d.play()
 d.sleep()
-print(Dog.mro())
+print(Dog.mro()) #  показує список усіх у порядку наслідування
 
 print("=" * 89)  # =========================================================
 
@@ -404,33 +431,33 @@ print("=" * 89)  # =========================================================
 class A(object):
     # def __init__(self):
     #     print("Initializator class A")
-    # def hi(self):
-    #     print("A")
-    pass
+    def hi(self):
+        print("A")
+    # pass
 
 
 class AA(object):
     # def __init__(self):
     #     print("Initializator class A")
-    # def hi(self):
-    #     print("A")
-    pass
+    def hi(self):
+        print("A")
+    # pass
 
 
 class B(A):
     # def __init__(self):
     #     print("Initializator class B")
-    # def hi(self):
-    #     print("B")
-    pass
+    def hi(self):
+        print("B")
+    # pass
 
 
 class C(AA):
     # def __init__(self):
     #     print("Initializator class C")
     pass
-    # def hi(self):
-    #     print("C")
+    def hi(self):
+        print("C")
 
 
 class D(B, C):
@@ -441,7 +468,7 @@ class D(B, C):
 
 
 d = D()
-# d.hi()
+d.hi()
 print(D.mro())  # метод .mro() покаже порядок пошуку методів чи ініціалізаторів
 
 
@@ -509,4 +536,10 @@ st2 = StudenT("Vladislav")
 
 st1.show()
 st2.show()
+
+
+
+
+
+
 

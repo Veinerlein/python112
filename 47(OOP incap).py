@@ -146,7 +146,8 @@ class Rectangle:
             print("Should be integer or float.!\n(Using default data 2)")
 
     def set_side(self, a, b):
-        if Rectangle.__check_type(a) and Rectangle.__check_type(b):
+        if __class__.__name__.__check_type(a) and Rectangle.__check_type(b):  # можна ректангл, а можна імя класу
+            # через код клас нейм
             self.a = a
             self.b = b
         else:
@@ -263,6 +264,7 @@ class Pointer:
         del self.__x
 
     coordzX = property(__get_x, __set_x, __del_x)  # дозволить перезаписувати через закриті методи __set_x,
+
     # та __get_x автоматично
     # використовуючи coordzX
 
@@ -270,7 +272,7 @@ class Pointer:
 p1 = Pointer(5, 10)
 p1.__set_x = 100
 print(p1.__dict__)  # {'_Pointer__x': 5, '_Pointer__y': 10, '__set_x': 100}
-
+pon = Pointer(1.2, 3.2)
 p2 = Pointer(5, 10)
 # p2.coordzX = "100" # ValueError: Wrong format of data
 p2.coordzX = 100
@@ -423,6 +425,9 @@ class Convertation:
     def to_pounts(self):
         print(self.weight, "KG =>", self.__weight * 2.205, "pounts")
 
+    def to_kg(self):
+        print(self.weight, "Pounts =>", round(self.__weight/2.205, 2),"kg")
+
 
 box1 = Convertation(12)
 print(box1.__dict__)
@@ -438,7 +443,8 @@ print(box2.weight)
 
 box1.to_pounts()
 box2.to_pounts()
-
+box3 = Convertation(220)
+box3.to_kg()
 
 class Cats:
     """This class represents a cat"""
@@ -591,15 +597,13 @@ class Cats:
     def print_Information(self):
         # d = dict(zip(self.slts, [getattr(self, f"_{self.__class__.__name__}{attr}") for attr in self.slts])) #
         # Варіант якщо є __slots__
-        d = dict(zip(self.slts, [getattr(self, f"_Cats__{attr}") for attr in self.slts])) # варіант із звичайним
+        d = dict(zip(self.slts, [getattr(self, f"_Cats__{attr}") for attr in self.slts]))  # варіант із звичайним
         # списком (ІМЕНА ЗМІННИХ ПОВИННІ ЗБІГАТИСЬ ІЗ ІМЕНАМИ ВІДПОВІДНИХ SELF-ЗМІННИХ)
         [print(f"{k} : {v}") for k, v in d.items()]
-        print('='*40)
-        {print(k,":",v) for k,v in d.items()}
+        print('=' * 40)
+        {print(k, ":", v) for k, v in d.items()}
         print()
-        [print(k,":",v) for k,v in self.__dict__.items()]
-
-
+        [print(k, ":", v) for k, v in self.__dict__.items()]
 
     def print_info(self):
         print(f"Hello my name is {self.__name}. I am {self.__age} years old.\n"
@@ -618,3 +622,5 @@ cat1 = Cats("Alita", 1, "'European shorthear'", 30, 4.5, "gray-white and black",
 print(cat1.name)
 cat1.print_info()
 cat1.print_Information()
+
+print(pon.coordzX)

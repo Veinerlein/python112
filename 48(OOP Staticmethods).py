@@ -1,38 +1,42 @@
-# class Point:
+class Point:
+
+    def __init__(self, x, y):
+        self.__x = x
+        self.__y = y
+
+    # @staticmethod
+    def __check_value(z):
+        if isinstance(z, int) or isinstance(z, float):
+            return True
+        return False
+
+    @property
+    def coords_x(self):
+        return self.__x
+
+    @coords_x.setter
+    def coords_x(self, x):
+        if Point.__check_value(x):
+            self.__x = x
+        else:
+            raise ValueError("Wrong format data")
+
+    @coords_x.deleter
+    def coords_x(self):
+        print(f"Видалення {self.__x}")
+        del self.__x
+
+
+#     # coordX = property(__get_coords_x, __set_coords_x, __del_coords_x) # змінна курд х отримала код проперті який
+#     виконується коли виклик цієї змінної
 #
-#     def __init__(self, x, y):
-#         self.__x = x
-#         self.__y = y
-#
-#     def __check_value(z):
-#         if isinstance(z, int) or isinstance(z, float):
-#             return True
-#         return False
-#
-#     @property
-#     def coords_x(self):
-#         return self.__x
-#
-#     @coords_x.setter
-#     def coords_x(self, x):
-#         if Point.__check_value(x):
-#             self.__x = x
-#         else:
-#             raise ValueError("Wrong format data")
-#
-#     @coords_x.deleter
-#     def coords_x(self):
-#         print(f"Видалення {self.__x}")
-#         del self.__x
-#
-#     # coordX = property(__get_coords_x, __set_coords_x, __del_coords_x)
-#
-#
-# p1 = Point(5, 10)
-#
-# print(p1.__dict__)
-# p1.coords_x = 23
-# print(p1.__dict__)
+p1 = Point(5, 10)
+
+print(p1.__dict__)
+p1.coords_x = 23
+print(p1.__dict__)
+
+
 #
 #
 # class kgtpounds:
@@ -170,9 +174,11 @@ class Numbers:
         return (a + b + c + d) / 4
 
     @staticmethod
-    def fact():
-        pass
-
+    def fact(a):
+        fac = 1
+        for i in range(1, a + 1):
+            fac *= i
+        return fac
 
 print(Numbers.makxs(3, 5, 7, 9))
 print(Numbers.minis(3, 5, 7, 9))
@@ -230,12 +236,12 @@ print(date.string_to_db())
 
 d1 = Date()
 date1 = d1.from_string("02.12.2020")
-print(date1.string_to_db()) # 2020-12-2
+print(date1.string_to_db())  # 2020-12-2
 
 date2 = Date.from_string("15.10.2021")  # date2 не є екземпляром класу, це просто змінна, не є екземпляром класу тому,
 # що не було виклику Date()
 print(date2)
-print(date2.string_to_db()) # 2021-10-15
+print(date2.string_to_db())  # 2021-10-15
 
 """self - відноситься до екземпляру класу а 
  cls - просто до класу
@@ -271,8 +277,8 @@ class Geometric:
 
     @staticmethod
     def area_triangle_g(a, b, c):
-        P = a+b+c
-        s = P/2
+        P = a + b + c
+        s = P / 2
         return f"За формулою герона {(s * (s - a) * (s - b) * (s - c)) ** (1 / 2)}"
 
     @staticmethod
@@ -281,11 +287,10 @@ class Geometric:
 
     @staticmethod
     def triangle_area_(width, high):
-        return f"ПЛоща трикутника за висотою та стороною {(1/2)*width*high}"
+        return f"ПЛоща трикутника за висотою та стороною {(1 / 2) * width * high}"
 
-print(Geometric.area_triangle_g(3,4,5)) # 6.0
-print(Geometric.area_rectangle(2,6))
-print(Geometric.triangle_area_(6,7))
+
+print(Geometric.area_triangle_g(3, 4, 5))  # 6.0
+print(Geometric.area_rectangle(2, 6))
+print(Geometric.triangle_area_(6, 7))
 print(Geometric.area_square(7))
-
-

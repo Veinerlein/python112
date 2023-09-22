@@ -684,6 +684,8 @@ print(doc.__doc__)  # поверне усі задокументовані да�
 
 def symbols(a=122, b=97):
     return "-".join([chr(x) for x in range(b, a + 1)]) if a > b else " ".join([chr(x) for x in range(a, b + 1)])
+
+
 # JOIN РОБИТЬ з любого списку строку, і не треба ніякого map із print
 
 # simple code here
@@ -702,21 +704,25 @@ symbols_loop()
 # вивід усіх символів між а і b
 print(symbols())
 
+
 def obmin(a="one two"):
-    res = "".join(a[a.find(" ")+1:] +" "+ a[:a.find(" ")])
+    res = "".join(a[a.find(" ") + 1:] + " " + a[:a.find(" ")])
     return res
+
 
 def obmin2(a="one two"):
     res = a.split(" ")
-    res = res[1]+" "+res[0]
+    res = res[1] + " " + res[0]
     return res
 
+
 a = "one two"
-print(a[a.find(" ")+1:] + " " + a[:a.find(" ")])
+print(a[a.find(" ") + 1:] + " " + a[:a.find(" ")])
 print(obmin2())
 print(obmin())
 
-def exvert(s = "ab12c59p7bq"):
+
+def exvert(s="ab12c59p7bq"):
     digits = []
     for el in s:
         try:
@@ -726,9 +732,11 @@ def exvert(s = "ab12c59p7bq"):
             pass
     return digits
 
+
 print(exvert())
 
-def exvert2(s = "ab12c59p7bq"):
+
+def exvert2(s="ab12c59p7bq"):
     digits = []
     for el in s:
         if el.isdigit():
@@ -737,12 +745,15 @@ def exvert2(s = "ab12c59p7bq"):
             pass
     return digits
 
-def extract(s= "ab12c59p7bq"):
+
+def extract(s="ab12c59p7bq"):
     digits = []
     for ii in s:
-        if ii in "0123456789": # could be method "0123456789".find(ii)
+        if ii in "0123456789":  # could be method "0123456789".find(ii)
             digits.append(int(ii))
     return digits
+
+
 print(exvert2())
 print(extract())
 
@@ -753,5 +764,171 @@ for s in string:
     if s.isspace():
         pass
     else:
-        rez+=s
+        rez += s
 print(rez.strip("M"))
+
+print("=" * 56)  # ==================================================
+"""Mixins"""
+
+
+class Student:
+    def __init__(self, name="fdsaf"):  # ініціалізатор для студента
+        self.name = name
+        self.note = self.Laptop()  # для того щоб могти використовувати метод вкладеного класу, створюю
+        # його об'єкт і зберігаю і змінну
+
+    def show(self):
+        print(self.name, end="")  # реалізація методу
+        self.note.show()  # запуск методу із вкладеного класу
+
+    def change_parameters(self, model, processor, memory):  # додаткова функція для можливості змінювати
+        self.note = self.Laptop(model, processor, memory)  # змінювати параметри об'єкту вкладеного класу
+
+    class Laptop:
+        def __init__(self, model="HP", processor='I7', memory='16'):  # немає функції передачі параметрів,
+            # є лише метод їх зміни
+            self.model = model
+            self.processor = processor
+            self.memory = memory
+
+        def show(self):
+            print(f" => {self.model}, {self.processor}, {self.memory}")
+
+
+p = Student("Roman")
+p2 = Student("Vovan")
+
+p.show()
+p2.show()
+p2.change_parameters("Dell", "Ryzen7", "16")
+p2.show()
+
+print(Student.__doc__)
+print(Student.__dir__)
+print(dir(Student))
+
+p1 = Student()
+print(p1.name)
+# p1.name = "fhdsjlfhdasl"
+print(p1.name)
+print(p1.__dict__)
+
+
+class Poin:
+    x = 3
+    y = 4  # print(Poin.y)
+
+    def __new__(cls, *args, **kwargs):
+        print("ВИклик __new__ для " + str(cls))
+        return super().__new__(cls)
+
+    def __init__(self, x=0, y=0):  # print(getattr(obt, "y"))
+        print("ВИклик __init__ для " + str(self))
+        self.x = x  # print(pt.x)
+        self.y = y  # print(pt.y)
+        self.z = __class__.__name__
+
+
+pt = Poin(1, 2)
+obt = Poin()
+print(obt.__dict__)
+print(Poin.y)
+print(pt.__class__.__name__)
+print(pt.x)
+print(pt.y)
+print(getattr(obt, "y"))
+
+"""SINGLETON"""
+
+
+class DataBase:
+    __instance = None  # посилання на екземпляр класу (патерн Sangleton)
+
+    def __new__(cls, *args, **kwargs):  # надає адресу області памяті
+        if cls.__instance is None:  # якщо він нан, то
+            cls.__instance = super().__new__(cls)  # тут буде адреса нового об'єкту, якщо нан
+        # якщо не нан, то поверне адресу раніше створеного об'єкту
+        return cls.__instance
+
+    def __del__(self):
+        DataBase.__instance = None  # якщо мусор видалить екземпляр, то знову буде прийматись нан,
+        # а, отже, знову буде виконуватись рядок коду із умовою "if cls.__instance is None"
+        # і буде мати можливість створюватись 1 екземпляр
+
+    def __init__(self, x, y, z):  # надає значення змінним
+        self.user = x
+        self.psw = y
+        self.port = z
+
+    def connect(self):
+        print(f"Connection with database: {self.user},{self.psw},{self.port}")
+
+    def close(self):
+        print('Closing connection with database')
+
+    def read(self):
+        return "database data"
+
+    def write(self, data):
+        print(f"Loading to DB {data}")
+
+
+db = DataBase("root", "1234", 80)
+db2 = DataBase("root2", "4321", 17)
+print(id(db), id(db2))
+# 1938657974144 1938657974144 - рівність айді означає, що об'єкт посилається на один і той
+# же район пам'яті
+print(db.__dict__)  # {'user': 'root2', 'psw': '4321', 'port': 17}
+print(db2.__dict__)  # {'user': 'root2', 'psw': '4321', 'port': 17}
+
+print("=" * 98)  # =================================================
+
+
+class Vector:
+    MIN_COORD = 0
+    MAX_COORD = 100
+
+    @classmethod  # метод класу працює лише із атрибутами цього класу
+    def validate(cls, arg):
+        return cls.MIN_COORD <= arg <= cls.MAX_COORD
+
+    def validate2(self, x):
+        return Vector.MIN_COORD <= x <= Vector.MAX_COORD  # працює АЛЕ погана практика
+        # адже часто у великих проектах змінюється нізви класів
+
+    @staticmethod
+    def validate3(x, y):
+        return __class__(x, y).MIN_COORD <= y + x <= __class__(x, y).MAX_COORD  # те саме що і з
+        # класvетодом, тільки тут я вдався до передачі лишніх аргументів, які унеможливлюють
+        # помилку. (Хоча лишній х ніяк не задіяний)(задіяв)
+
+    def __init__(self, x, y):
+        self.x = self.y = 0
+        if self.validate(x) and self.validate(y):
+            self.x = x
+            self.y = y
+
+    def get_coord(self):
+        return self.x, self.y
+
+    @staticmethod
+    def norm2(x,y):
+        return x*x+y*y
+
+
+v = Vector(1, 2)
+res = v.get_coord()
+print(Vector.validate(6))
+ress = Vector.get_coord(v)
+print(res, '==', ress)
+print(Vector)
+print(Vector.get_coord(v))
+print(Vector.MIN_COORD)
+print(Vector.MAX_COORD)
+
+# print(Vector.validate2(5)) - не працює так
+print(v.validate2(6))
+print(v.validate3(7, 1118))
+print(v.norm2(5,6))
+
+

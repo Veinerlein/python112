@@ -56,7 +56,7 @@ class MyMixinLog:
 
     def __init__(self):
         print("Init of MixinLog class")
-        self.ID += 1
+        __class__.__name__.ID += 1
         self.id = self.ID
 
     def mysave_sell_log(self):
@@ -73,6 +73,9 @@ myn = MyLaptop('HP', 1.5, 35000)
 myn.myprint_info()
 myn.mysave_sell_log()
 
+myn2 = MyLaptop("DELL", 1.3, 26000)
+myn2.mysave_sell_log()
+print(MyLaptop.mro())
 print('=' * 67)  # ==========================================================
 
 

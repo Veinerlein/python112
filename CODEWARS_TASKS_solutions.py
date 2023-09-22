@@ -107,6 +107,7 @@ def categorize_study(p_value, requirements):
 
 print(categorize_study(0.0001, 0))
 
+
 def cat_best_sol(p_value, requirements):
     study_value = p_value * (2 ** (6 - requirements))
 
@@ -119,8 +120,8 @@ def cat_best_sol(p_value, requirements):
     else:
         return "Pants on fire"
 
-print(cat_best_sol(0.0001, 0))
 
+print(cat_best_sol(0.0001, 0))
 
 """
 You like the way the Python + operator easily handles adding different numeric types,
@@ -135,35 +136,171 @@ For example, my_add(1, 3.414) would return 4.414, but my_add(42,
 Hint: using a try / except statement may simplify this kata.
 """
 
+
 def my_add(a, b):
     try:
-        res = a+b
+        res = a + b
     except TypeError:
         return None
     return res
-print(my_add(3,4))
+
+
+print(my_add(3, 4))
 
 print('++++++++++++++++++')
 
+
 def main_decor(*args):
     print(sum(args))
+
     def decoratior(fn):
-        print(sum(args)/len(args))
-        def wrapper(a,b):
+        print(sum(args) / len(args))
+
+        def wrapper(a, b):
             print("we are here")
-            fn(a,b)
+            fn(a, b)
             print("last thing")
             print('args:', str(args)[1:-1])
-            return fn(a,b)
+            return fn(a, b)
 
         return wrapper
+
     return decoratior
 
-@main_decor(2,4,6)
-def addition(a,b):
-    print("what")
-    return a+b
 
-print(addition(7,10))
+@main_decor(2, 4, 6)
+def addition(a, b):
+    print("what")
+    return a + b
+
+
+print(addition(7, 10))
 
 print("+++++++++++++++++++++++")
+
+"""
+Let's pretend your company just hired your friend from college and paid you a referral bonus. Awesome! To celebrate, you're taking your team out to the terrible dive bar next door and using the referral bonus to buy, and build, the largest three-dimensional beer can pyramid you can. And then probably drink those beers, because let's pretend it's Friday too.
+
+A beer can pyramid will square the number of cans in each level - 1 can in the top level, 4 in the second, 9 in the next, 16, 25...
+
+Complete the beeramid function to return the number of complete levels of a beer can pyramid you can make, given the parameters of:
+
+your referral bonus, and
+
+the price of a beer can
+
+For example:
+
+beeramid(1500, 2); // should === 12
+beeramid(5000, 3); // should === 16
+"""
+
+
+def beeramid(bonus, price):
+    q_b = int(bonus / price)
+    z = 0
+
+    for x in range(1, q_b + 1):
+
+        x = x ** 2
+        q_b -= x
+        if q_b >= 0:
+            z += 1
+        else:
+            break
+    return z
+
+
+print(beeramid(-1, 4))
+
+print("=" * 67)  # ============================================
+
+
+def beeramid2(bonus, price):
+    beers = bonus // price
+    levels = 0
+
+    while beers >= (levels + 1) ** 2:
+        levels += 1
+        beers -= levels ** 2
+
+    return levels
+
+
+print("=" * 67)  # ============================================
+
+
+def beeramid3(bonus, price):
+    i = 0
+    while bonus > 0:
+        i += 1
+        bonus -= price * i ** 2
+        if bonus < 0: i -= 1
+    return i
+
+
+print("=" * 67)  # ============================================
+
+"""Define a function that takes in two non-negative integers a and
+ b and returns the last decimal digit of a b.
+  Note that a and b may be very large!"""
+
+
+def last_digit3(n1, n2):
+    if n1 == 10:
+        return 0
+    if n2 == 0:
+        return 1
+    if len(str(n1)) > 1 and len(str(n2))>1:
+        sn1 = int(str(n1)[-2:])
+        sn2 = int(str(n2)[-2:])
+        res = sn1**sn2%10
+        return res
+    n1 = n1 % 10
+    n2 = n2 % 10
+    n = n1 ** n2
+    return n % 10
+def last_digit(n1, n2):
+    if n1 == 10:
+        return 0
+    if n2 == 0:
+        return 1
+    sn1 = int(str(n1)[-2:])
+    sn2 = int(str(n2)[-2:])
+    res = sn1**sn2%10
+    return res
+
+
+
+def last_digit2(n1, n2):
+    return pow( n1, n2, 10 )
+
+# Приклади використання
+print(last_digit2(9, 7))  # Виведе 9
+
+print(last_digit2(3715290469715693021198967285016729344580685479654510946723,
+                 68819615221552997273737174557165657483427362207517952651))
+print(last_digit3(4,1))
+print(last_digit3(4,2))
+print(last_digit3(9,7))
+print(last_digit3(10,10**10))
+print(last_digit3(2**200,2**300))
+print(last_digit3(1,2**300))
+print(last_digit3(1,2**300))
+# number = 3456789098765456789087654456789038490
+# print(list(map(int,[n for n in str(number)][-2:])))
+# l = [n for n in str(number)[-2:]]
+# r = list(map(int,l))
+# print(iter(l))
+# print(r)
+print("20"[-2:])
+
+
+pakagink = "виріб"
+papir = "папір"
+
+if pakagink is True:
+    del pakagink
+else:
+    del papir
+

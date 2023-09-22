@@ -1,32 +1,32 @@
 class Student:
-    def __init__(self, name, marks):
+    def __init__(self, name, marks: list):
         self.name = name
         self.marks = list(marks)
 
-    def __getitem__(self, item):
+    def __getitem__(self, item):  # перегрузка отримання даних у квадратних дужках
         if 0 <= item < len(self.marks):
             return self.marks[item]
         else:
             raise IndexError("Wrong index")
 
-    def __setitem__(self, key, value):
+    def __setitem__(self, key, value):  # Перегрузка оператора установлення даних через ключ-значення
         if 0 <= key <= len(self.marks) and isinstance(key, int):
             self.marks[key] = value
-        elif key >= len(self.marks):
+        elif key >= len(self.marks):  # Дозволяє вставити значення на вказаний довільний індекс
             off = key + 1 - len(self.marks)
             self.marks.extend([None] * off)
             self.marks[key] = value
         else:
             raise IndexError("Wrong index")
 
-    def __delitem__(self, key):
+    def __delitem__(self, key):  # Можливість видалити значення по ключу
         if not isinstance(key, int):
             raise TypeError("Index has to be integer")
         del self.marks[key]
 
 
 s1 = Student("Sergio]", [5, 5, 3, 7, 8])
-print(s1[2])  # 3
+print(s1[2])  # 3 - ДЛя цього прописаний __getitem__
 s1[10] = 4
 del s1[2]
 print(s1.marks)  # 4
@@ -39,8 +39,15 @@ class Point3D:
         self.z = z
         self.coords = x + y + z
 
+    @staticmethod
+    def checj_val(x):
+        return isinstance(x, (int, float))
+
     def get_form(self):
         return self.x, self.y, self.z
+
+    def __str__(self):
+        return f"{self.x}, {self.y}, {self.z}"
 
     def __add__(self, other):
         if not isinstance(other, Point3D):
@@ -81,9 +88,9 @@ class Point:
     RIGHT = "Right operand has to be type Point"
 
     def __init__(self, x=0, y=0, z=0):
-        self.x = x
-        self.y = y
-        self.z = z
+        self.__x = x
+        self.__y = y
+        self.__z = z
 
     @staticmethod
     def __check_value(v):
@@ -95,7 +102,8 @@ class Point:
             raise ZeroDivisionError("Can not divide to zero")
 
     def __str__(self):
-        return f"{self.__x},{self.y},{self.z}"
+        return f"{self.x},{self.y},{self.z}"  # Оскільки створив геттр-сеттери, то тут відобраєатиметься їх результат
+        # дії
 
     @property
     def x(self):
@@ -152,7 +160,7 @@ class Point:
         if not isinstance(other, Point):
             raise ArithmeticError(self.RIGHT)
         self.__check0(other)
-        return Point(self.x / other.x, self.y / other.y, self.z / other.z)
+        return Point(self.__x / other.x, self.__y / other.y, self.__z / other.z)
 
     def __eq__(self, other):
         if not isinstance(other, Point):
@@ -182,7 +190,8 @@ class Point:
                 self.__y = value
             elif key == "z":
                 self.__z = value
-
+        else:
+            print("Wrong value")
 
 pt = Point(12, 15, 18)
 pt2 = Point(6, 3, 9)
@@ -192,7 +201,7 @@ print(f"Coordinates 2st point : {pt2}")  # Coordinates 2st point : 6,3,9
 pt3 = pt + pt2
 print(f"Sum of coordinates {pt3}")  # Sum of coordinates 18,18,27
 pt6 = pt / pt2
-print(f"Sum of coordinates {pt6}")  # Sum of coordinates 2.0,5.0,2.0
+print(f"Devided of coordinates {pt6}")  # Sum of coordinates 2.0,5.0,2.0
 print(f"Equity of coordinates : {pt == pt2}")  # Equity of coordinates : False
 
 print("x = ", pt["x"], "x1 = ", pt2["x"])  # x =  12 x1 =  6
@@ -462,6 +471,8 @@ print(cat)
 #             print(spaces + stars)
 
 from geometry import RECT, TRIAN, SQ
+
+
 # from geometry import *
 
 def main():
@@ -484,17 +495,17 @@ def main():
     f3.print_figure()
 
 
-
 if __name__ == "__main__":
     main()
+
 
 def main2():
     e = electrocar.Electrocar("Tesla", "T", 2018, 99000)
     e.show_car()
     e.description_battery()
 
+
 from car import electrocar
+
 if __name__ == '__main__':
     main2()
-
-

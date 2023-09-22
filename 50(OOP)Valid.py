@@ -5,32 +5,34 @@ import re
 
 class UserDate:
     def __init__(self, pib, age, ps, weight):
-        self.verify_pib(pib)
-        self.verify_age(age)
-        self.verify_weight(weight)
-        self.verify_ps(ps)
+        # self.verify_pib(pib)
+        # self.verify_age(age)
+        # self.verify_weight(weight)
+        # self.verify_ps(ps)
 
-        self.__pib = pib.split()
-        self.__age = age
-        self.__password = ps
-        self.__weight = weight
+        self.pib = pib # Якшо пропертігеттерсеттер одинакового імені із селфпіб, то валідація використається у
+        # геттері і код що стосується pib вище може бути закоментованим
+        self.age = age
+        self.password = ps # а тут ситуація інша, і валідація не спрацює
+        self.weight = weight
 
-    @classmethod
-    def verify_pib(cls, pib):
+    # @classmethod
+    @staticmethod
+    def verify_pib(pib):
         if not isinstance(pib, str):  # якщо не строка то зайдем в цей блок і закінчимо помилкою
             raise TypeError("ПІБ має бути строкою")
         f = pib.split()  # поверне масив з трьох елементів ПІБ
         print(f)
         if len(f) != 3:  # перевірка масиву
             raise TypeError("Невірний формат")
-        letters = "".join(re.findall(r"[a-zа-я-]", pib, flags=re.IGNORECASE))  # ПрізвищеІм'яПобатькові
+        letters = "".join(re.findall(r"[a-zа-яі-]", pib, flags=re.IGNORECASE))  # ПрізвищеІм'яПобатькові
         print(letters)
         for s in f:
-            if len(s.strip(letters)) != 0:  # стріп видалить усі букви, які вказані в круглих дужках, за наявністю
+            if len(s.strip(letters)) != 0:  # с тріп видалить усі букви, які вказані в круглих дужках, за наявністю
                 # 1 цифри  довжина стане 1, і тоді ми зайдемо у цей блок де буде ловитись помилка
                 raise TypeError("В ПІБ можна використовувати тільки букви або дефіси")
 
-    @classmethod
+    @classmethod  # не обовязково використовувати клас метод, спрацює і статік і звичайний
     def verify_age(cls, age):
         if not isinstance(age, int) or age < 14 or age > 100:
             raise TypeError('Тип даних віку повинен бути числом в діапазоні від 14 до 100')
@@ -50,11 +52,11 @@ class UserDate:
             raise TypeError('Не вірний формат паспортних даних')  # райз закриє виконання так само як ретурн
 
     @property
-    def get_pib(self):
+    def pib(self):
         return self.__pib
 
-    @get_pib.setter
-    def get_pib(self, x):
+    @pib.setter
+    def pib(self, x):
         self.verify_pib(x)
         self.__pib = x
 
@@ -87,8 +89,8 @@ class UserDate:
 
 
 p1 = UserDate("Заплет Денис Миколайович", 26, "1234 567890", 80.8)
-p1.get_pib = "Баран Тарас Брозович"
-print(p1.get_pib)
+p1.pib = "Баран Тарас Брозович"
+print(p1.pib)
 p1.get_ps = "2390 123097"
 print(p1.get_ps)
 p1.get_age = 35
@@ -169,7 +171,7 @@ class Line(Prop):
         else:
             print("Coordinates have to be numbers")
 
-    def __set_to_coords(self, sp, ep):
+    def __set_two_coords(self, sp, ep):
         if sp.is_int() and ep.is_int():
             self._sp = sp
             self._ep = ep
@@ -181,12 +183,12 @@ class Line(Prop):
         if ep is None:
             self.__set_one_coords(sp)  # готовий метод для однієї координати
         else:
-            self.__set_to_coords(sp, ep)  # Готовий метод для вводу двох координат
+            self.__set_two_coords(sp, ep)  # Готовий метод для вводу двох координат
 
 
 line = Line(Point(1, 2), Point(10, 20))
 line.drow_line()
-line.set_coords(Point(30.6, 40), Point(100, 200))
+line.set_coords(Point(30, 40), Point(100, 200))
 line.drow_line()
 
 line.set_coords(Point(-12, -20))
@@ -386,9 +388,6 @@ class Root(ABC):
     def __init__(self, equation: str):
         self.equation = equation
 
-
-
-
     @abstractmethod
     def line_equation(self):
         pass
@@ -404,7 +403,6 @@ class Root(ABC):
         else:
             print("line equation")
             self.line_equation()
-
 
     @staticmethod
     def Discriminant(a, b, c):
@@ -450,10 +448,10 @@ class LineEquation(Root):
         root = self.line_equation()
         print(f"The root of {self.equation} is {root}")
 
+
 class Sq_equation(Root):
     # def __init__(self, equation):
-        # super().__init__(equation)
-
+    # super().__init__(equation)
 
     def sq_equation(self):
         leftside = self.equation.split("=")[0]
@@ -476,6 +474,7 @@ class Sq_equation(Root):
 
     def line_equation(self):
         pass
+
 
 S = Sq_equation("1x**2-2x-3=0")
 print(S.sq_equation())

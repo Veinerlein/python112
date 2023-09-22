@@ -9,4 +9,4 @@ class Electrocar(carclass.CarClass):
         print(f"{self.brand},{self.model},{self.year},{self.probig},")
 
     def description_battery(self):
-        print(f"This cas has power: {self.battery}%")
+        print(f"This car has power: {self.battery}%")

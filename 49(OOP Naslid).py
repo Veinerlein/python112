@@ -550,7 +550,7 @@ class Time:
     def sum_seconds(self, self2):
         return self + self2
 
-    def __add__(self, other): # Додав можливість додавання екземплярів класу
+    def __add__(self, other):  # Додав можливість додавання екземплярів класу
         return self.total_seconds() + other.total_seconds()
 
     @staticmethod
@@ -570,7 +570,7 @@ class Time:
     def difference(self, self2):
         print(self - self2)
 
-    def __sub__(self, other): # додав оператор віднімання для екземплярів
+    def __sub__(self, other):  # додав оператор віднімання для екземплярів
         return abs(self.total_seconds() - other.total_seconds())
 
 
@@ -694,3 +694,111 @@ class Triangle(Pairs):
 two = Triangle(8, 5)
 print(two.__dict__)  # {'A': 8, 'B': 5}
 two.print_info()
+
+
+class Time:
+    timezone = f"UTC +2"
+
+    def __init__(self, time):
+        self.check_value(time)
+        self.time = time.split(":")  # ['15', '10', '45']
+        self.__sec = self.time[2]
+        self.__hour = self.time[0]
+        self.__min = self.time[1]
+        # self.hour1, self.min1, self.sec1 = time.split(":")  # 15 10 45
+        self.hour1, self.min1, self.sec1 = map(int, self.time)  # 15 10 45
+
+    def __del__(self):
+        print(self.time, "is deleted")
+
+    def __add__(self, other):
+        return self.time + other.time
+
+    @classmethod
+    def time_zone(cls, znak: str, n: str):
+        cls.timezone = f"UTC {znak}{n}"
+
+    @staticmethod
+    def check_value(x):
+        if not isinstance(x, str):
+            raise TypeError("Помилка вводу, некоректний тип даних. Повинні бути int або str")
+        if not ":" in x:
+            raise ValueError("Час повинене бути написаний у форматі h:m:s")
+        for i in x.split(":"):
+            if len(i) > 2:
+                raise TypeError("Час повинен бути у форматі ХХ:XX:XX")
+        hour, min, sec = map(int, x.split(":"))
+        if hour > 24 or min > 60 or sec > 60:
+            raise ValueError("Завеликі значення")
+        else:
+            pass
+
+    @staticmethod
+    def is_digit(x):
+        if not isinstance(x, (int, str)):
+            raise TypeError("must be int ot str")
+        if int(x) > 60:
+            raise ValueError("значення завеликі")
+
+    @staticmethod
+    def from_sec_to_hour(sec):
+        hour = sec // 3600
+        min = (sec % 3600) // 60
+        sec = sec%60
+        return f"{hour:02}:{min:02}:{sec:02}"
+
+    def print_time(self):
+        print(self.time)
+        print(self.hour1, self.min1, self.sec1, "- OLD TIME")
+        if (self.hour1, self.min1, self.sec1) == (self.__hour, self.__min, self.__sec):
+            pass
+        else:
+            print(self.__hour, self.__min, self.sec, "- NEW TIME")
+
+    def total_sec(self):
+        return int(self.hour) * 3600 + int(self.min) * 60 + int(self.sec)
+
+    @property
+    def hour(self):
+        return self.__hour
+
+    @property
+    def min(self):
+        return self.__min
+
+    @property
+    def sec(self):
+        return self.__sec
+
+    @hour.setter
+    def hour(self, h):
+        if int(h) > 24:
+            raise ValueError("Звелике значення для години")
+        self.__hour = h
+
+    @min.setter
+    def min(self, m):
+        self.is_digit(m)
+        self.__min = m
+
+    @sec.setter
+    def sec(self, s):
+        self.is_digit(s)
+        self.__sec = s
+
+
+T = Time("15:10:45")
+T.print_time()
+T.sec = 15
+T.print_time()
+# T.hour = 4
+T.print_time()
+T2 = Time("23:34:54")
+print(T.total_sec())
+print(T.from_sec_to_hour(54615))
+# не можна одинаково називати геттер і змінну, якщо писати в ініціалізаторі так
+#         self.sec = self.time[2]
+#         self.hour = self.time[0]
+#         self.min = self.time[1]
+# оскільки, імена конфлікутють. А якщо геттер і сеттер назвати second чи hours чи minutes відповідно,
+# то тоді конфлікту імен не буде. Як Варіант, можна використати закриті змінні.

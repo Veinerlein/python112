@@ -63,8 +63,19 @@ class Triangle(Shape):
     def print_figure(self):
         k = 1
         for i in range(1, self.__b + 1):
-            spaces = " " * (self.__a - k + i)
+            spaces = " " * (self.__a - (k + i))
             k += int(i / self.__a) + i
-            stars = "*" * (k - 1)  # (int(self.__a/i))
+            stars = "*" * (self.__a)  # (int(self.__a/i))
             # stars2 = "*"*(i-1)
             print(spaces + stars)
+
+
+class Trian:
+    def __init__(self, a, b, c):
+        self.a = a
+        self.b = b
+        self.c = c
+
+
+t= Triangle(11,6,6)
+t.print_figure()
