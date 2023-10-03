@@ -193,6 +193,7 @@ class Point:
         else:
             print("Wrong value")
 
+
 pt = Point(12, 15, 18)
 pt2 = Point(6, 3, 9)
 
@@ -509,3 +510,20 @@ from car import electrocar
 
 if __name__ == '__main__':
     main2()
+
+
+class Mouse:
+
+    def __init__(self, name):
+        self.name = name
+
+    def __repr__(self):  # Також повертає строку, Використовується для КОНСОЛІ
+        return f"{self.__class__}: {self.name}"
+
+    def __str__(self):  #  Відпрацює стр, а __repr__ не працюватиме при наявності __str__
+        return f"{self.name}"
+
+
+mouse = Mouse('Gerry')
+
+print(mouse)

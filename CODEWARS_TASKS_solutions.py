@@ -251,15 +251,17 @@ def last_digit3(n1, n2):
         return 0
     if n2 == 0:
         return 1
-    if len(str(n1)) > 1 and len(str(n2))>1:
+    if len(str(n1)) > 1 and len(str(n2)) > 1:
         sn1 = int(str(n1)[-2:])
         sn2 = int(str(n2)[-2:])
-        res = sn1**sn2%10
+        res = sn1 ** sn2 % 10
         return res
     n1 = n1 % 10
     n2 = n2 % 10
     n = n1 ** n2
     return n % 10
+
+
 def last_digit(n1, n2):
     if n1 == 10:
         return 0
@@ -267,26 +269,26 @@ def last_digit(n1, n2):
         return 1
     sn1 = int(str(n1)[-2:])
     sn2 = int(str(n2)[-2:])
-    res = sn1**sn2%10
+    res = sn1 ** sn2 % 10
     return res
 
 
-
 def last_digit2(n1, n2):
-    return pow( n1, n2, 10 )
+    return pow(n1, n2, 10)
+
 
 # Приклади використання
 print(last_digit2(9, 7))  # Виведе 9
 
 print(last_digit2(3715290469715693021198967285016729344580685479654510946723,
-                 68819615221552997273737174557165657483427362207517952651))
-print(last_digit3(4,1))
-print(last_digit3(4,2))
-print(last_digit3(9,7))
-print(last_digit3(10,10**10))
-print(last_digit3(2**200,2**300))
-print(last_digit3(1,2**300))
-print(last_digit3(1,2**300))
+                  68819615221552997273737174557165657483427362207517952651))
+print(last_digit3(4, 1))
+print(last_digit3(4, 2))
+print(last_digit3(9, 7))
+print(last_digit3(10, 10 ** 10))
+print(last_digit3(2 ** 200, 2 ** 300))
+print(last_digit3(1, 2 ** 300))
+print(last_digit3(1, 2 ** 300))
 # number = 3456789098765456789087654456789038490
 # print(list(map(int,[n for n in str(number)][-2:])))
 # l = [n for n in str(number)[-2:]]
@@ -294,7 +296,6 @@ print(last_digit3(1,2**300))
 # print(iter(l))
 # print(r)
 print("20"[-2:])
-
 
 pakagink = "виріб"
 papir = "папір"
@@ -304,3 +305,33 @@ if pakagink is True:
 else:
     del papir
 
+print("=" * 89)  # =============================================================================
+
+
+def same_structure_as(a, b):
+    return (False if not (isinstance(a, list) and isinstance(b, list)) or len(a) != len(b)
+            else all(same_structure_as(c, d) for c, d in zip(a, b) if isinstance(c, list)))
+
+
+print("=" * 89)  # =============================================================================
+
+
+def make_hash(nest):
+    if isinstance(nest, list):  # якщо список, то занурюємось у елементи списку
+        elems = ''  # сюди канкатенуємо
+        for elem in nest:
+            elems += make_hash(elem)  # якщо елемент не список, то в елемс буде додаватись зірка
+        return '[' + elems + ']'
+    else:
+        return '*'
+
+
+# перетворення кожного елементу (не списку) у зірку
+def same_structure_as2(original, other):
+    if make_hash(original) == make_hash(other):
+        return True
+    else:
+        return False
+
+
+print("=" * 89)  # =============================================================================
