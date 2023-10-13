@@ -8,6 +8,7 @@ class CarClass:
     def show_car(self):
         print(f"{self.brand},{self.model},{self.year},{self.probig},")
 
-if __name__=='__main__':
+
+if __name__ == '__main__':
     e = CarClass("Tesla", "T", 2020, 50000)
     e.show_car()

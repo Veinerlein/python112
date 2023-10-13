@@ -1,5 +1,6 @@
 from les.car import carclass
 
+
 class Electrocar(carclass.CarClass):
     def __init__(self, brand, model, year, probig):
         super().__init__(brand, model, year, probig)
@@ -10,3 +11,9 @@ class Electrocar(carclass.CarClass):
 
     def description_battery(self):
         print(f"This car has power: {self.battery}%")
+
+
+if __name__ == '__main__':
+    pass
+
+

@@ -46,25 +46,43 @@ print(code_CD(16), "PPPPPLLLL", 'Failed on number 16')  # 16 = 00010000
 print(code_CD(63), "PLPLPLPPP", 'Failed on number 63')  # 63 = 00111111
 print(code_CD(222), "PPLPLPPLP", 'Failed on number 222')  # 222 = 11011110
 
-
 print('**********')
-encode_cd=lambda n,x=0:'P'+''.join('PL'[x:=x^int(b)]for b in f'{n:08b}'[::-1])
+encode_cd = lambda n, x=0: 'P' + ''.join('PL'[x := x ^ int(b)] for b in f'{n:08b}'[::-1])
 print('**********')
 from itertools import accumulate
 
+
 def encode_cd2(n):
     return ''.join(accumulate(
-        map(int, reversed(f'{ n :0>8b}')),
-        lambda pit,b: pit if not b else 'PL'[pit=='P'],
+        map(int, reversed(f'{n :0>8b}')),
+        lambda pit, b: pit if not b else 'PL'[pit == 'P'],
         initial='P'
     ))
+
+
 print('**********')
+
+
 def encode_cd3(n):
     res = 'P'
     for b in f'{n:08b}'[::-1]:
-        res += 'PLP'[(res[-1]=='P') + (b=='0')]
+        res += 'PLP'[(res[-1] == 'P') + (b == '0')]  # (res[-1] == 'P') - Це порівнює останній символ
+        # рядка res з символом 'P'. Якщо останній символ рядка res рівний 'P', то цей вираз буде True, інакше - False.
+        # (b == '0') - Це порівнює символ b (який представляє один біт зі строки бінарного представлення числа)
+        # з символом '0'. Якщо b дорівнює '0', то цей вираз буде True, інакше - False.
+    # Після цього обидва порівняння (res[-1] == 'P') і (b == '0') дають True або False, і ці значення додаються
+    # (за допомогою +). В Python, True відповідає 1, а False відповідає 0 при арифметичних операціях,
+    # тому (True + True) дорівнює 2, (False + False) дорівнює 0, і так далі.
+    # Результат порівняння (res[-1] == 'P') + (b == '0') дає ціле число (0 або 1),
+    # яке використовується як індекс для вибору символа з рядка 'PLP'.
+    # Вибраний символ додається до рядка res.
     return res
+
+
+print(f"cd3 =  {encode_cd3(5)}")
 print('**********')
+
+
 def encode_cd4(n):
     FEATURES = ['P', 'L']
     state = 0
@@ -75,26 +93,37 @@ def encode_cd4(n):
         n //= 2
         result += FEATURES[state]
     return result
+
+
 print('**********')
 from itertools import accumulate
 from operator import xor
 
+
 def encode_cd5(n):
     bits = map(int, reversed(f'{n:08b}'))
     return ''.join(map('LP'.__getitem__, accumulate(bits, xor, initial=1)))
+
+
 print('**********')
+
+
 def encode_cd6(n):
     en = bin(n)[2:].rjust(8, '0')[::-1]
     res = "P"
     for i in en:
         if i == '0':
-            res+=res[-1]
+            res += res[-1]
         elif res[-1] == 'P':
-            res+='L'
+            res += 'L'
         else:
-            res+='P'
+            res += 'P'
     return res
+
+
 print('**********')
+
+
 def encode_cd7(n):
     n = bin(n)[2:].rjust(8, '0')[::-1]
     output = 'P'
@@ -104,22 +133,33 @@ def encode_cd7(n):
             cur ^= 1
         output += 'PL'[cur]
     return output
+
+
 print('**********')
 
 from re import sub
 from itertools import cycle
 
+
 def encode_cd8(n):
-    c=cycle('PL')
-    if n&1: next(c)
-    return 'P'+sub(r'10*|0+',lambda m:(next(c)or m[0][0]>'0'and next(c))*len(m[0]),'{:08b}'.format(n)[::-1])
+    c = cycle('PL')
+    if n & 1: next(c)
+    return 'P' + sub(r'10*|0+', lambda m: (next(c) or m[0][0] > '0' and next(c)) * len(m[0]), '{:08b}'.format(n)[::-1])
+
+
 print('**********')
+
+
 def encode_cd9(n):
     result = 'P'
     for x in f'{n:b}'.zfill(8)[::-1]:
         result += result[-1] if x == '0' else 'L' if result[-1] == 'P' else 'P'
     return result
+
+
 print('***********')
+
+
 def encode_cd10(n):
     s = "P"
     for _ in range(8):

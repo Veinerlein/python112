@@ -148,8 +148,5 @@ print(f3.perimetr())
 f3.print_figure()
 
 __author__ = "Arthur"
-if __name__ == "__main__":
+if __name__ == "__main__":  # для того, щоб не запрацював код при імпорті у файлі іншому
     print(f" Module {__name__}  author: {__author__}")
-
-
-
