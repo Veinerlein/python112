@@ -403,3 +403,6 @@ c.dumping("Europe.json")
 # c.chose()
 c.choise(3)
 # c.choise(6)
+
+
+
