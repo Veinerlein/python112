@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block content %}
+{{ super() }}
+<hr>
+<h2>Post: {{title}}</h2>
+<div>
+    <div class="single-post">{{post | safe }}</div>
+</div>
+{% endblock %}

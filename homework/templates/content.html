@@ -1,0 +1,4 @@
+{% macro content() %}
+<h1>{% block title_content %}{% endblock %}</h1>
+<p>{% block chapter_content scoped %}{% endblock %}</p>
+{% endmacro %}

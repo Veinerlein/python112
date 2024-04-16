@@ -1,0 +1,81 @@
+body, html {
+    background: grey;
+    height: 100%;    
+}
+p {
+    border: 1px solid black;
+}
+div {
+    border: 3px solid black;
+}
+.page {
+    background-color: aqua;
+    /* height: 100%;     */ /*видалив для того щоб general part мала можливість піти вниз */
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Забезпечує, що .page простягається на мінімальну висоту вікна перегляду */
+}
+
+.mainmenu {
+    background-color: aliceblue;
+    align-self: center;
+    justify-content: space-around;
+    
+    padding: 20px 45px 20px 20px;
+    margin-top: 0px ;
+    list-style: none;
+    display: flex;
+    
+}
+a {
+    text-decoration: none;
+    display: block;
+}
+.mainmenu a{
+    font-family: Arial, Helvetica, Arial, Helvetica, sans-serif;
+    font-weight: 900;
+    padding: 20px;
+    
+    
+    
+}
+
+.general-part {
+    background-color: rgb(15, 153, 109);
+    flex-grow: 1; /* щоб .general-part займала усю доступну висоту */
+    box-sizing: border-box;
+    margin: 10px;
+    padding: 10px;
+    
+}
+.general-part div{
+    padding: 10px;
+    box-shadow: 0px 0px 62px 22px #f2fc6a,
+     0px 0px 25px 3px inset cornsilk;
+}
+
+/* застосувати Flexbox до контейнера .page 
+(який обгортає усі елементи, включаючи футер), щоб штовхнути футер вниз. */
+.footer {
+    background-color: beige;
+    margin-top: auto;  /* штовхає футер на низ у даній ситуації */
+}
+
+.menu-punkt {
+    background-color: burlywood;
+    cursor: pointer;
+    
+}
+#title {
+    text-align: center;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    background-color: lightgoldenrodyellow;
+    padding: 35px;
+    margin: 10px;
+    font-size: 55px;
+    
+}
+.form-action {
+justify-content: center;
+display: flex;
+}

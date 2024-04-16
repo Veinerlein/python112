@@ -1,0 +1,30 @@
+[
+    {
+        "Student": "John Malkovich",
+        "Marks": [
+            91,
+            82,
+            "78",
+            75
+        ]
+    },
+    {
+        "Student": "Milos Ninkovich",
+        "Marks": [
+            71,
+            62,
+            "98",
+            73
+        ]
+    },
+    {
+        "Student": "Marius Levandovski",
+        "Marks": [
+            100,
+            81,
+            "88",
+            78,
+            45
+        ]
+    }
+]
