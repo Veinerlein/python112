@@ -1,0 +1,13 @@
+{% extends 'page.html'%} {# розширення шаблону #}
+{% block title %} About a website {% endblock %}
+
+{% block content%} {# Звязка документів #}
+{% block table_contents  %}
+{{super()}}
+{% endblock %}
+<h1>{{self.title()}}</h1> {# посилання на дані із title вище по принципу ООП#}
+<p>Describing<p>
+    {% block item %}<p class = 'item'> {{super()}}</p> {% endblock %}
+    {%endblock%}
+
+{# super бере текст із батьківського документа, у того, у який приходять значення, тобто у page в даному випадку #}

@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{{ super() }}
+{% block general_part %}
+{{ super() }}
+<h3>Реєстрація</h3>
+<div>
+
+</div>
+
+<form action="/register"  method="post" class="form-action">
+    <p> Name: <input type="text" name="name" required ></p>
+    <p> Nickname: <input type="text" name="nickname" required ></p>
+    <p> Email: <input type="email" name="email" required ></p>
+    <p> Password: <input type="password" name="psw" required ></p>
+    <p> Repeat your password: <input type="password" name="psw2" required ></p>
+    <p> <input type="submit" value="Registration" > </p>
+</form>
+
+{% endblock general_part %}
+{% endblock %}
+{% block footer %}
+{{super()}}
+{% endblock footer %}
+

@@ -1,0 +1,11 @@
+{
+    "firstname": "Janet",
+    "lastname": "Django",
+    "hobbies": [
+        "running",
+        "wolking",
+        "sky gazing"
+    ],
+    "age": 5,
+    "20": "one"
+}

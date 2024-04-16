@@ -1,0 +1,91 @@
+body{
+background: yellow;
+margin:0;
+padding:0;
+font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+.menu{
+display: flex;
+justify-content: space-around;
+list-style: none;
+background : orange;
+padding: 20px;
+margin-top: 0;
+}
+
+.menu a{
+    font-weight:  bold;
+    color: brown;
+}
+
+.content{
+margin:0 auto;
+max-width: 1200px;
+padding: 20px;
+box-sizing: border-box;
+}
+
+.flash{
+padding:10px;
+}
+.flash.success{
+background:#AEFFC5;
+border: 1px solid #21DB56;
+}
+.flash.error{
+border 1px solid #FF4343;
+background:#FF9C9C;
+}
+
+/* блок статтей всіх */
+.article {
+  margin: 20px;
+  padding: 20px;
+  border: 1px solid #ddd; /* Тонка сіра рамка */
+  border-radius: 8px; /* Закруглені кути */
+  background-color: grey; /* Світлий фон */
+}
+/* заголовок статті */
+.title {
+
+  color: #333; /* Темно-сірий колір тексту */
+}
+
+.title a {
+margin: 0;
+line-height: 1.8;
+color : brown;
+background: lightblue;
+font : Verdana;
+font-weight: bold;
+display: block; /* лодонь з'явиться у любому місці по довживі посилання */
+text-decoration: none; /* забрати підкреслення */
+}
+
+.title a:hover {
+background: white;
+}
+
+/* текст статті */
+.anounce {
+  text-align: justify; /* Вирівнювання тексту по ширині */
+  line-height: 1.6; /* Міжрядковий інтервал */
+  margin-top: -1px px;
+  margin-bottom: 40 px;
+  background: lightyellow;
+}
+
+.single-post  {
+margin: 20px;
+  padding: 20px;
+  border: 1px solid #ddd; /* Тонка сіра рамка */
+  border-radius: 8px; /* Закруглені кути */
+  background-color: green; /* Світлий фон */
+  font-weight: bold ;
+}
+
+ul.article li>p, ul.article li div {
+border: 0px solid #CCC;
+padding: 10px 20px ;
+}
+

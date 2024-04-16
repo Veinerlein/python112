@@ -1,0 +1,1 @@
+It is string with writing in to a file

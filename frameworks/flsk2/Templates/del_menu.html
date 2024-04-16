@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content %}
+{{super()}}
+
+{% for cat,msg in get_flashed_messages(True) %}
+<div class="flash {{cat}}">{{msg}}</div>
+
+{% endfor %}
+
+<form action='{{url_for("del_menu")}}' method="POST" class="form-contact">
+    <p>Enter the name of menu: <input type="text" name="menu_name" required></p>
+    <p><input type="submit" value="Accept" ></p>
+</form>
+
+{% endblock %}

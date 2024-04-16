@@ -3,7 +3,7 @@ from view63 import index, blog
 
 
 class Web:
-    URL = {"/": index, "/blog": blog}  # index,blog  == HTML templates
+    URL = {"/": index, "/blog": blog}  # index,blog  == HTML Templates
     ip_address = '127.0.0.1'
     port = 5000
 

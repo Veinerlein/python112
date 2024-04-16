@@ -75,7 +75,7 @@ links = '''<select name = 'cities'>
     {%elif city.city == 'Kiyv'%}
         <option>{{city['city']}}</option>
     {% else -%}
-        {{ city['city']}}
+        {{ city['city'] }}
     {% endif -%}
 {% endfor -%}
 </select>
@@ -103,11 +103,11 @@ classname = {'class': "active"}
 datas = """
 <ul>
 {% for elem in m -%}
-{% if elem == m[0] -%}
-<li><a href = "/{{elem['link']}}" class = {{c['class']}}>{{elem['name']}}</a><Li>
-{%else-%}
-<li><a href = "/{{elem['link']}}">{{elem['name']}}</a><Li>
-{% endif -%}
+    {% if elem == m[0] -%}
+        <li><a href = "/{{elem['link']}}" class = {{c['class']}}>{{elem['name']}}</a><Li>
+    {%else-%}
+        <li><a href = "/{{elem['link']}}">{{elem['name']}}</a><Li>
+    {% endif -%}
 {%endfor-%}
 </ul>
 """
@@ -116,6 +116,7 @@ temp = Template(datas)
 msg = temp.render(m=menu, c=classname)
 print(msg)
 
+lst = [1, 2, 3, 4, 5, 6]
 cars = [
     {"model": "Audi", 'price': 23000},
     {"model": "Subaru", 'price': 17000},
@@ -124,19 +125,32 @@ cars = [
     {"model": 'BMW', 'price': 34000}
 ]
 
-sum = "Summ of all cars: {{c | sum(attribute = 'price')}}"
-
+sum = "Summ of all cars:{{ c | sum(attribute='price') }}"
+# sum = "Summ of all cars: {{c | max(attribute = 'price')}}" дасть максимальну ціну
+# sum = "Summ of all cars: {{ (c | max(attribute = 'price')).model }}" дасть модель із максимальною ціною
+sum2 = "Summ of all cars: {{ c | random }}"  # random
+sum3 = "Summ of all cars: {{ c | replace('model', 'brand' ) }}"  # змінить імя модель на бренд, але не значення
 
 tm = Template(sum)
 mesg = tm.render(c=cars)
 print(mesg)
 
+l = [
+    {'link': 'index', 'page': 'Main'},
+    {'link': 'news', 'page': 'News'},
+    {'link': 'about', 'page': 'About'},
+    {'link': 'shop', 'page': 'Store'},
+    {'link': 'contacts', 'page': 'Contacts'}
+]
+h = """<ul>
+{% for i in l %}
+    {% if i.page=='Main' %}
+    {{ i.link }}
+    {%- endif -%} 
+    <li><a href = /{{i.link}}>{{i.page}}</a></li> 
+    {%- endfor %}
+    </ul>"""
 
-
-
-
-
-
-
-
-
+t = Template(h)
+res = t.render(l=l)
+print(res)

@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block content %}
+{{super()}}
+{% for cat, mes in get_flashed_messages(True) %}
+<div class="flash {{cat}}">
+    {{mes}}
+</div>
+{% endfor %}
+<form action="/form" method="post" class="form-form">
+    <p>Name   :<input type="text" name="Username" value="" required ></p>
+    <p>Mail   :<input type="text" name="email" value="" required ></p>
+    <p>Message</p>
+    <p><textarea name="message" cols="40" rows="7"></textarea></textarea></p>
+    <p><input type="submit" value="SEND" ></p>
+</form>
+
+{% endblock %}

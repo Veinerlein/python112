@@ -1,0 +1,13 @@
+{% include ['header.html', 'page2.html'] ignore missing %}
+{#{% import 'dialogs.html' as dlg %}#}
+{% from "dialogs.html" import dialog_1 as dlg %}
+<p>Content of page</p>
+{#{{dlg.dialog_1("Attention","This is text dialog")}}#}
+{{dlg("Attention","This is text dialog")}}
+{% include 'footer.html' ignore missing %}
+<!-- проігнорує якщо не існує-->
+{#<!-- ignore missing проігнорує якщо не існує-->#}
+{#  тут два варіанта щоб вставляти змінні  #}
+
+
+

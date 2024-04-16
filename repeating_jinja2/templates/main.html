@@ -1,0 +1,6 @@
+{% from "index.html" import content %} {# ІМПОРТ МАКРОСА, можна робити зверху, а викликати при необхідності#}
+{%  include "header.html" ignore missing %}
+{{content("А от і MESG")}}
+
+{% block content %}{% endblock %}
+{% include "footer.html" %}

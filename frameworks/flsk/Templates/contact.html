@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block content %}
+{{ super() }}
+{% for cat, msg in get_flashed_messages(True) %} <!--Опціональний аргумент True в get_flashed_messages(True) вказує, що
+повідомлення повинні бути вилучені з сесії після їх відображення. Це означає, що флеш-повідомлення будуть показані
+тільки один раз.-->
+<div class="flash {{cat}}">{{msg}}</div>
+{% endfor %}
+
+Feedback
+<form action="/contact" method="post" class="form-contact"> <!--Атрибут action вказує на URL, куди будуть відправлені
+ дані форми (/contact у вашому випадку), а атрибут method="post" визначає, що дані будуть відправлені HTTP-методом POST.-->
+  <p>Name: <input type="text" name="usernames" value="" required></p>
+  <p>Email: <input type="text" name="email" value="" required></p>
+  <p>Message</p>
+  <p><textarea name="message" cols="40" rows="7"></textarea></p>
+  <p><input type="submit" value="Send"></p>
+</form>
+{% if usernames and email %}
+<p>  Name of user: {{ usernames}}</p>
+<p>  email of user: {{ email }}</p>
+<p>  message of user: {{ message }}</p>
+{% endif %}
+
+{% endblock %}
